@@ -12,6 +12,12 @@ class MainView {
   IconData? icon;
   Color? color;
 
-  MainView(this.key, this.view, this.title, this.widget,
-      {this.icon, this.color});
+  MainView(
+    this.key,
+    this.view,
+    this.title,
+    this.widget, {
+    this.icon,
+    this.color,
+  });
 }
