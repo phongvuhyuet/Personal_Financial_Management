@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 
 class MyAppIcons {
-  //get instance of the AntdesignIcons class
+  //get instance of the AntDesignIcons class
   static IconData home = MaterialIcons.home;
   static IconData create = MaterialIcons.create;
   static IconData details = MaterialIcons.details;
-  static IconData piechart = MaterialIcons.pie_chart;
+  static IconData pieChart = MaterialIcons.pie_chart;
   static IconData cart = MaterialCommunityIcons.cart;
   static IconData bag = Feather.shopping_bag;
   static IconData trash = Feather.trash;

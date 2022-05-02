@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/utils/global_key.dart';
+import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 
 class MyBottomNavigator extends StatefulWidget {
   const MyBottomNavigator({Key? key, required this.pageController})
@@ -44,7 +44,7 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
     );
     statisticPage = BottomNavigationBarItem(
       icon: Icon(
-        MyAppIcons.piechart,
+        MyAppIcons.pieChart,
       ),
       label: 'Thống kê',
     );
@@ -78,9 +78,9 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
           key: GlobalKeys.bottomBarKey,
           currentIndex: _currentIndex,
           elevation: 0,
-          unselectedItemColor: Color.fromRGBO(158, 158, 158, 1),
-          selectedItemColor: Color.fromRGBO(193, 161, 78, 1),
-          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          unselectedItemColor: MyAppColors.gray500,
+          selectedItemColor: MyAppColors.accent800,
+          backgroundColor: MyAppColors.gray050,
           mouseCursor: MaterialStateMouseCursor.clickable,
           showUnselectedLabels: true,
           iconSize: 24,
