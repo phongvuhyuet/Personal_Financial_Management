@@ -4,7 +4,7 @@
 | :-------- | :------- | :------------------------- |
 | Vũ Cao Tân | Front-End | 19020431 |
 | Vũ Văn Phong| Back-End | 19020392 |
-| Lê Hải Long | Tester | 19020351 |
+| Lê Hải Long | Tester | 19020351  |
 
 ## Framework
  - [Flutter](https://flutter.dev/)
