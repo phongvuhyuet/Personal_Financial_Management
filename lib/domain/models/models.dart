@@ -9,7 +9,7 @@ class MainView {
   String view;
   String title;
   Widget widget;
-  IconData? icon;
+  Widget? icon;
   Color? color;
 
   MainView(

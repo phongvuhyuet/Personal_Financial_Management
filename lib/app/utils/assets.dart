@@ -1,10 +1,10 @@
 class Assets {
-  static const String fonts = "fonts";
-  static const String images = "images";
-  static const String icons = "icons";
+  static const String fonts = "assets/fonts";
+  static const String images = "assets/images";
+  static const String icons = "assets/icons";
 }
 
-class ActionIcon{
+class ActionIcon {
   static const String actionIconURL = "${Assets.icons}/action";
 
   static const String addCircle = "$actionIconURL/add_circle.svg";
@@ -15,8 +15,10 @@ class ActionIcon{
   static const String dictationMic = "$actionIconURL/dictation_mic.svg";
   static const String done = "$actionIconURL/done.svg";
   static const String doneCircle = "$actionIconURL/done_circle.svg";
-  static const String doneCircleInactive = "$actionIconURL/done_circle_inactive.svg";
-  static const String doneCircleOutline = "$actionIconURL/done_circle_outline.svg";
+  static const String doneCircleInactive =
+      "$actionIconURL/done_circle_inactive.svg";
+  static const String doneCircleOutline =
+      "$actionIconURL/done_circle_outline.svg";
   static const String dragHandle = "$actionIconURL/drag_handle.svg";
   static const String faceID = "$actionIconURL/faceID.svg";
   static const String favorites = "$actionIconURL/favorites.svg";
@@ -35,12 +37,21 @@ class ActionIcon{
   static const String visibilityOff = "$actionIconURL/visibilityOff.svg";
 }
 
+class Logo {
+  static const String logoURL = "${Assets.images}/logo.svg";
+}
+
+class GoogleIcon {
+  static const String googleIconURL = "${Assets.images}/google.svg";
+}
+
 class AlertIcon {
   static const String alertIconURL = "${Assets.icons}/alert";
 
   static const String error = "$alertIconURL/error.svg";
   static const String errorOutline = "$alertIconURL/error_outline.svg";
-  static const String notificationImportant = "$alertIconURL/notification_important.svg";
+  static const String notificationImportant =
+      "$alertIconURL/notification_important.svg";
 }
 
 class ContentIcon {
@@ -62,7 +73,8 @@ class FinancialIcon {
   static const String bitcoin = "$financialIconURL/bitcoin.svg";
   static const String creditCard = "$financialIconURL/credit_card.svg";
   static const String development = "$financialIconURL/development.svg";
-  static const String discountPercent = "$financialIconURL/discount_percent.svg";
+  static const String discountPercent =
+      "$financialIconURL/discount_percent.svg";
   static const String discussion = "$financialIconURL/discussion.svg";
   static const String dollar = "$financialIconURL/dollar.svg";
   static const String euro = "$financialIconURL/euro.svg";
@@ -105,14 +117,18 @@ class NavigationIcon {
 
   static const String apps = "$navigationIconURL/apps.svg";
   static const String arrowDropDown = "$navigationIconURL/arrow_drop_down.svg";
-  static const String arrowDropDownCircle = "$navigationIconURL/arrow_drop_down_circle.svg";
+  static const String arrowDropDownCircle =
+      "$navigationIconURL/arrow_drop_down_circle.svg";
   static const String arrowDropUp = "$navigationIconURL/arrow_drop_up.svg";
   static const String arrowLeft = "$navigationIconURL/arrow_left.svg";
   static const String arrowRight = "$navigationIconURL/arrow_right.svg";
   static const String chevronLeftOn = "$navigationIconURL/chevron_left_on.svg";
-  static const String chevronLeftOff = "$navigationIconURL/chevron_left_off.svg";
-  static const String chevronRightOn = "$navigationIconURL/chevron_right_on.svg";
-  static const String chevronRightOff = "$navigationIconURL/chevron_right_off.svg";
+  static const String chevronLeftOff =
+      "$navigationIconURL/chevron_left_off.svg";
+  static const String chevronRightOn =
+      "$navigationIconURL/chevron_right_on.svg";
+  static const String chevronRightOff =
+      "$navigationIconURL/chevron_right_off.svg";
   static const String close = "$navigationIconURL/close.svg";
   static const String closeCircle = "$navigationIconURL/close_circle.svg";
   static const String expandLessOn = "$navigationIconURL/expand_less_on.svg";
@@ -130,7 +146,8 @@ class SocialIcon {
   static const String socialIconURL = "${Assets.icons}/social";
 
   static const String notifications = "$socialIconURL/notifications.svg";
-  static const String notificationsOutline = "$socialIconURL/notifications_outline.svg";
+  static const String notificationsOutline =
+      "$socialIconURL/notifications_outline.svg";
   static const String shareAndroid = "$socialIconURL/share_android.svg";
   static const String shareIOS = "$socialIconURL/share_ios.svg";
 }
@@ -140,10 +157,16 @@ class ToggleIcon {
 
   static const String checkbox = "$toggleIconURL/checkbox.svg";
   static const String checkboxOff = "$toggleIconURL/checkbox_off.svg";
-  static const String indeterminateCheckbox = "$toggleIconURL/indeterminate_checkbox.svg";
+  static const String indeterminateCheckbox =
+      "$toggleIconURL/indeterminate_checkbox.svg";
   static const String radioButtonOn = "$toggleIconURL/radio_button_on.svg";
   static const String radioButtonOff = "$toggleIconURL/radio_button_off.svg";
   static const String star = "$toggleIconURL/star.svg";
   static const String starHalf = "$toggleIconURL/star_half.svg";
   static const String starOutline = "$toggleIconURL/star_outline.svg";
+}
+
+class BackgroundImages {
+  static const String backgroundImagesURL = "${Assets.images}/background.svg";
+  static const String foregroundImagesURL = "${Assets.images}/foreground.svg";
 }

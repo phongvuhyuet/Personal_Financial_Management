@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
+import 'package:personal_financial_management/app/utils/assets.dart';
 import 'package:personal_financial_management/app/utils/global_key.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 
@@ -25,33 +27,28 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
   @override
   void initState() {
     homePage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.home,
-      ),
+      icon: MyAppIcons.home,
+      activeIcon: MyAppIcons.homeActive,
       label: 'Trang chủ',
     );
     detailsPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.details,
-      ),
+      icon: MyAppIcons.details,
+      activeIcon: MyAppIcons.detailsActive,
       label: 'Chi tiết',
     );
     inputPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.create,
-      ),
+      icon: MyAppIcons.create,
+      activeIcon: MyAppIcons.createActive,
       label: 'Nhập',
     );
     statisticPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.pieChart,
-      ),
+      icon: MyAppIcons.pieChart,
+      activeIcon: MyAppIcons.pieChartActive,
       label: 'Thống kê',
     );
     walletPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.cart,
-      ),
+      icon: MyAppIcons.wallet,
+      activeIcon: MyAppIcons.walletActive,
       label: 'Ví',
     );
     super.initState();
