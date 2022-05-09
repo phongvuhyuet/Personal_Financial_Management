@@ -1,63 +1,43 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class Category extends Equatable {
   String id;
   String name;
-  String? email;
-  String password;
-  String phone;
+  bool? isInput;
   String createdAt;
   String updatedAt;
   String deletedAt;
-  String status;
-  String token;
-  User({
+  Category({
     required this.id,
     required this.name,
-    this.email,
-    required this.password,
-    required this.phone,
+    this.isInput,
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
-    required this.status,
-    required this.token,
   });
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         name: json["name"],
-        email: json["email"],
-        password: json["password"],
-        phone: json["phone"],
+        isInput: json["isInput"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
-        status: json["status"],
-        token: json["token"],
       );
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "email": email,
-        "password": password,
-        "phone": phone,
+        "isInput": isInput,
         "created_at": createdAt,
         "updated_at": updatedAt,
         "deleted_at": deletedAt,
-        "status": status,
-        "token": token,
       };
   @override
   List<Object?> get props => [
         id,
         name,
-        email,
-        password,
-        phone,
+        isInput,
         createdAt,
         updatedAt,
         deletedAt,
-        status,
-        token,
       ];
 }
