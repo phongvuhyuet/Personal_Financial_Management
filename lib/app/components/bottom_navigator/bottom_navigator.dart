@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
+import 'package:personal_financial_management/app/utils/assets.dart';
 import 'package:personal_financial_management/app/utils/global_key.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 
 class MyBottomNavigator extends StatefulWidget {
-  const MyBottomNavigator({Key? key, required this.pageController})
-      : super(key: key);
+  const MyBottomNavigator({
+    Key? key,
+    required this.pageController,
+    required this.currentIndex,
+  }) : super(key: key);
   final PageController pageController;
+  final int currentIndex;
   @override
   State<MyBottomNavigator> createState() => _MyBottomNavigatorState();
 }
@@ -25,37 +31,32 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
   @override
   void initState() {
     homePage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.home,
-      ),
+      icon: MyAppIcons.home,
+      activeIcon: MyAppIcons.homeActive,
       label: 'Trang chủ',
     );
     detailsPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.details,
-      ),
+      icon: MyAppIcons.details,
+      activeIcon: MyAppIcons.detailsActive,
       label: 'Chi tiết',
     );
     inputPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.create,
-      ),
+      icon: MyAppIcons.create,
+      activeIcon: MyAppIcons.createActive,
       label: 'Nhập',
     );
     statisticPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.pieChart,
-      ),
+      icon: MyAppIcons.pieChart,
+      activeIcon: MyAppIcons.pieChartActive,
       label: 'Thống kê',
     );
     walletPage = BottomNavigationBarItem(
-      icon: Icon(
-        MyAppIcons.cart,
-      ),
+      icon: MyAppIcons.wallet,
+      activeIcon: MyAppIcons.walletActive,
       label: 'Ví',
     );
     super.initState();
-    _currentIndex = 0;
+    _currentIndex = widget.currentIndex;
   }
 
   @override
@@ -77,10 +78,10 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
         child: BottomNavigationBar(
           key: GlobalKeys.bottomBarKey,
           currentIndex: _currentIndex,
-          elevation: 0,
+          elevation: 0.1,
           unselectedItemColor: MyAppColors.gray500,
           selectedItemColor: MyAppColors.accent800,
-          backgroundColor: MyAppColors.gray050,
+          backgroundColor: MyAppColors.gray100,
           mouseCursor: MaterialStateMouseCursor.clickable,
           showUnselectedLabels: true,
           iconSize: 24,
