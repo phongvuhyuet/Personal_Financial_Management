@@ -38,8 +38,13 @@ dependencies:
   equatable: ^2.0.3
   flutter_icons_null_safety: ^1.1.0
   flutter_bloc: ^8.0.1
-  flutter_svg: ^1.0.3
-  flutter_svg_provider: ^1.0.3
+  flutter_svg: ^1.0.2
+  google_sign_in: ^5.3.0
+  fl_chart: ^0.50.1
+  flutter_rounded_date_picker: ^2.0.2
+  flutter_localizations:
+    sdk: flutter
+    version: ^0.0.0
 
 dev_dependencies:
   flutter_test:
@@ -64,9 +69,17 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    # - assets/fonts/
-    - assets/icons/
     - assets/images/
+    - assets/icons/action/
+    - assets/icons/alert/
+    - assets/icons/content/
+    - assets/icons/financial_icons/
+    - assets/icons/general_icons/
+    - assets/icons/map/
+    - assets/icons/navigation/
+    - assets/icons/social/
+    - assets/icons/toggle/
+    # - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

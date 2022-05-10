@@ -35,7 +35,12 @@ class MyAppIcons {
   );
 
   static Widget person = SvgPicture.asset(GeneralIcon.person);
-  static Widget create = SvgPicture.asset(ContentIcon.create);
+  static Widget create = SvgPicture.asset(
+    ContentIcon.create,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
   static Widget createActive = SvgPicture.asset(
     ContentIcon.create,
     color: MyAppColors.accent800,
@@ -43,7 +48,12 @@ class MyAppIcons {
     height: 24,
     width: 24,
   );
-  static Widget details = SvgPicture.asset(FinancialIcon.receipt);
+  static Widget details = SvgPicture.asset(
+    FinancialIcon.receipt,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
   static Widget detailsActive = SvgPicture.asset(
     FinancialIcon.receipt,
     color: MyAppColors.accent800,
@@ -99,6 +109,39 @@ class MyAppIcons {
     FinancialIcon.wallet,
     fit: BoxFit.fill,
     color: MyAppColors.accent800,
+    height: 24,
+    width: 24,
+  );
+
+  // action icons
+  static Widget visibility = SvgPicture.asset(ActionIcon.visibility);
+  static Widget infoOutline = SvgPicture.asset(ActionIcon.infoOutline);
+  static Widget info = SvgPicture.asset(ActionIcon.info);
+  static Widget visibilityOff = SvgPicture.asset(
+    ActionIcon.visibilityOff,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+
+  // notification icons
+  static Widget notification = SvgPicture.asset(
+    SocialIcon.notifications,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+
+  //navigation icons
+  static Widget menu = SvgPicture.asset(
+    NavigationIcon.menu,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  static Widget backEnabled = SvgPicture.asset(
+    NavigationIcon.chevronLeftOn,
+    fit: BoxFit.fill,
     height: 24,
     width: 24,
   );

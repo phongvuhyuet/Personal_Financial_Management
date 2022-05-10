@@ -6,9 +6,13 @@ import 'package:personal_financial_management/app/utils/global_key.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 
 class MyBottomNavigator extends StatefulWidget {
-  const MyBottomNavigator({Key? key, required this.pageController})
-      : super(key: key);
+  const MyBottomNavigator({
+    Key? key,
+    required this.pageController,
+    required this.currentIndex,
+  }) : super(key: key);
   final PageController pageController;
+  final int currentIndex;
   @override
   State<MyBottomNavigator> createState() => _MyBottomNavigatorState();
 }
@@ -52,7 +56,7 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
       label: 'Ví',
     );
     super.initState();
-    _currentIndex = 0;
+    _currentIndex = widget.currentIndex;
   }
 
   @override
@@ -74,10 +78,10 @@ class _MyBottomNavigatorState extends State<MyBottomNavigator> {
         child: BottomNavigationBar(
           key: GlobalKeys.bottomBarKey,
           currentIndex: _currentIndex,
-          elevation: 0,
+          elevation: 0.1,
           unselectedItemColor: MyAppColors.gray500,
           selectedItemColor: MyAppColors.accent800,
-          backgroundColor: MyAppColors.gray050,
+          backgroundColor: MyAppColors.gray100,
           mouseCursor: MaterialStateMouseCursor.clickable,
           showUnselectedLabels: true,
           iconSize: 24,

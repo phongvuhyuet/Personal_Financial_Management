@@ -34,7 +34,7 @@ class ActionIcon {
   static const String sendOutline = "$actionIconURL/send_outline.svg";
   static const String setting = "$actionIconURL/setting.svg";
   static const String visibility = "$actionIconURL/visibility.svg";
-  static const String visibilityOff = "$actionIconURL/visibilityOff.svg";
+  static const String visibilityOff = "$actionIconURL/visibility_off.svg";
 }
 
 class Logo {
