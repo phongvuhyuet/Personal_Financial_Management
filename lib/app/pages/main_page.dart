@@ -21,8 +21,10 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>
+    with AutomaticKeepAliveClientMixin<MainPage> {
   late List<MainView> _pages;
+
   late PageController _pageController;
   late List<String> _viewTracking;
   late MainView _currentMainView;
@@ -86,6 +88,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(),
@@ -173,6 +176,7 @@ class _MainPageState extends State<MainPage> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
+      
       title: _buildTitle(),
       centerTitle: false,
       backgroundColor: MyAppColors.gray050,
@@ -193,4 +197,7 @@ class _MainPageState extends State<MainPage> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

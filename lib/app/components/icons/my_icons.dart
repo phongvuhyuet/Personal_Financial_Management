@@ -4,6 +4,10 @@ import 'package:personal_financial_management/app/components/colors/my_colors.da
 import 'package:personal_financial_management/app/utils/assets.dart';
 
 class MyAppIcons {
+  //default size off icons
+  static const double size = 24;
+  //default boxfit of icons
+  static const BoxFit boxFit = BoxFit.fill;
   //Logo
   static Widget logo = SvgPicture.asset(
     Logo.logoURL,
@@ -141,6 +145,34 @@ class MyAppIcons {
   );
   static Widget backEnabled = SvgPicture.asset(
     NavigationIcon.chevronLeftOn,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+
+  // two arrow icons on and off
+  static Widget chevronLeftOn = SvgPicture.asset(
+    NavigationIcon.chevronLeftOn,
+    color: MyAppColors.accent800,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  static Widget chevronRightOn = SvgPicture.asset(
+    NavigationIcon.chevronRightOn,
+    color: MyAppColors.accent800,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  static Widget chevronLeftOff = SvgPicture.asset(
+    NavigationIcon.chevronLeftOff,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  static Widget chevronRightOff = SvgPicture.asset(
+    NavigationIcon.chevronRightOff,
     fit: BoxFit.fill,
     height: 24,
     width: 24,
