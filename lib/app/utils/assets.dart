@@ -150,6 +150,7 @@ class SocialIcon {
       "$socialIconURL/notifications_outline.svg";
   static const String shareAndroid = "$socialIconURL/share_android.svg";
   static const String shareIOS = "$socialIconURL/share_ios.svg";
+  static const String smartPhone = "$socialIconURL/smart_phone.svg";
 }
 
 class ToggleIcon {

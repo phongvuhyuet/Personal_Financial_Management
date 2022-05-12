@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
@@ -20,7 +21,7 @@ class _ChartIndicatorState extends State<ChartIndicator> {
       animation: true,
       animationDuration: 1000,
       lineWidth: 15.0,
-      percent: 0.4,
+      percent: 0.7,
       center: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

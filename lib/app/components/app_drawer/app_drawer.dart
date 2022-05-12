@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -8,24 +9,16 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           _createHeader(),
-          _createDrawerItem(icon: Icons.note, text: 'Thông báo', onTap: () {}),
-          _createDrawerItem(
-              icon: Icons.contacts, text: 'Hoạt động', onTap: () {}),
-          _createDrawerItem(icon: Icons.event, text: 'Sự kiện', onTap: () {}),
-          _createDrawerItem(icon: Icons.face, text: 'Bạn bè', onTap: () {}),
+          _createDrawerItem(icon: Icons.person, text: 'Profile', onTap: () {}),
           Divider(),
-          _createDrawerItem(
-              icon: Icons.collections_bookmark, text: 'Thống kê', onTap: () {}),
           _createDrawerItem(
               icon: Icons.account_box, text: 'Tài khoản', onTap: () {}),
           _createDrawerItem(icon: Icons.stars, text: 'Trợ giúp', onTap: () {}),
+          _createDrawerItem(
+              icon: Icons.logout, text: 'Đăng xuất', onTap: () {}),
           Divider(),
           _createDrawerItem(
               icon: Icons.bug_report, text: 'Báo cáo', onTap: () {}),
-          ListTile(
-            title: Text('Ver 1.0'),
-            onTap: () {},
-          ),
         ],
       ),
     );
@@ -35,18 +28,17 @@ class AppDrawer extends StatelessWidget {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,
-                image:
-                    AssetImage('assets/images/drawer_header_background.png'))),
+                image: AssetImage('assets/images/profile.jpg'))),
         child: Stack(children: <Widget>[
           Positioned(
               bottom: 12.0,
               left: 16.0,
-              child: Text('UserName',
+              child: Text('Nguyễn Văn A',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: MyAppColors.gray700,
                       fontSize: 22.0,
                       fontWeight: FontWeight.w600))),
         ]));

@@ -110,33 +110,28 @@ class _MyDatePickerState extends State<MyDatePicker> {
   }
 
   Widget _buildMonthChanger() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-              splashRadius: 20,
-              color: MyAppColors.gray900,
-              hoverColor: MyAppColors.danger,
-              icon: MyAppIcons.chevronLeftOn,
-              onPressed: () {
-                setState(() {
-                  _today = _today.subtract(Duration(
-                      days: getDaysInMonth(_today.year, _today.month)));
-                });
-              }),
-          IconButton(
-            splashRadius: 20,
-            icon: MyAppIcons.chevronRightOn,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+            icon: MyAppIcons.chevronLeftOn,
             onPressed: () {
+              // change month of today
               setState(() {
-                _today = _today.add(
+                _today = _today.subtract(
                     Duration(days: getDaysInMonth(_today.year, _today.month)));
               });
-            },
-          ),
-        ],
-      ),
+            }),
+        IconButton(
+          icon: MyAppIcons.chevronRightOn,
+          onPressed: () {
+            setState(() {
+              _today = _today.add(
+                  Duration(days: getDaysInMonth(_today.year, _today.month)));
+            });
+          },
+        ),
+      ],
     );
   }
 }

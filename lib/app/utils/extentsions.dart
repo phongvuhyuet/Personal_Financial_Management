@@ -8,7 +8,7 @@ final NumberFormat numberFormat = NumberFormat.currency(
   customPattern: '#,##0.00',
 );
 
-   // get number of days in a specific month
-   int getDaysInMonth(int year, int month) {
-    return DateTime(year, month + 1).difference(DateTime(year, month)).inDays;
-  }
+// get number of days in a specific month
+int getDaysInMonth(int year, int month) {
+  return DateTime(year, month + 1).difference(DateTime(year, month)).inDays;
+}
