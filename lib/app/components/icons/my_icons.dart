@@ -6,6 +6,16 @@ import 'package:personal_financial_management/app/utils/assets.dart';
 class MyAppIcons {
   //default size off icons
   static const double size = 24;
+  static final defaultStyle = [
+    {"fit": BoxFit.fill},
+    {
+      "height": 24,
+    },
+    {
+      "width": 24,
+    }
+  ];
+  static final Color iconColor = MyAppColors.gray800;
   //default boxfit of icons
   static const BoxFit boxFit = BoxFit.fill;
   //Logo
@@ -177,4 +187,26 @@ class MyAppIcons {
     height: 24,
     width: 24,
   );
+  //financial icons
+  static Widget bank = SvgPicture.asset(
+    FinancialIcon.bankBuilding,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  static Widget penny = SvgPicture.asset(
+    FinancialIcon.penny,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+
+// social icons
+  static Widget smartPhone = SvgPicture.asset(
+    SocialIcon.smartPhone,
+    fit: BoxFit.fill,
+    height: 24,
+    width: 24,
+  );
+  
 }

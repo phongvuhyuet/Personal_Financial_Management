@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:personal_financial_management/app/components/app_drawer/app_drawer.dart';
 
 import 'package:personal_financial_management/app/components/bottom_navigator/bottom_navigator.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
@@ -92,6 +93,7 @@ class _MainPageState extends State<MainPage>
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(),
+        drawer: _buildAppDrawer(),
         key: GlobalKeys.mainScaffold,
         body: _buildBody(),
         bottomNavigationBar: _buildBottomNavigator(),
@@ -99,6 +101,7 @@ class _MainPageState extends State<MainPage>
     );
   }
 
+  // Widgets
   Widget _buildBody() {
     return PageView(
       controller: _pageController,
@@ -126,23 +129,6 @@ class _MainPageState extends State<MainPage>
         pageController: _pageController,
         currentIndex: _pages.indexOf(_currentMainView));
   }
-
-  void _handlePageChanged(int index) {
-    setState(() {
-      _currentMainView = _pages[index];
-      _isMainView = _currentMainView.view == 'main';
-    });
-  }
-
-  void _handleOpenSearch() {}
-  void _handleOpenDrawer() {}
-  void _handleOpenNotification() {}
-  void _handleCallback(
-      {String? key,
-      String? view,
-      String? title,
-      IconData? icon,
-      Color? color}) {}
 
   Widget _buildLeading() {
     if (!_isMainView) {
@@ -176,7 +162,6 @@ class _MainPageState extends State<MainPage>
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      
       title: _buildTitle(),
       centerTitle: false,
       backgroundColor: MyAppColors.gray050,
@@ -197,6 +182,32 @@ class _MainPageState extends State<MainPage>
       ],
     );
   }
+
+  Widget _buildAppDrawer() {
+    return AppDrawer();
+  }
+  
+
+  // Widget handlers
+  void _handlePageChanged(int index) {
+    setState(() {
+      _currentMainView = _pages[index];
+      _isMainView = _currentMainView.view == 'main';
+    });
+  }
+
+  void _handleOpenSearch() {}
+  void _handleOpenDrawer() {
+    GlobalKeys.mainScaffold.currentState!.openDrawer();
+  }
+
+  void _handleOpenNotification() {}
+  void _handleCallback(
+      {String? key,
+      String? view,
+      String? title,
+      IconData? icon,
+      Color? color}) {}
 
   @override
   bool get wantKeepAlive => true;

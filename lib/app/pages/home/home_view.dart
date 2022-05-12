@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:personal_financial_management/app/components/charts/chart_indicator/pie_chart.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/date_picker/date_controller.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
@@ -112,7 +113,9 @@ class _HomeViewState extends State<HomeView> {
                   ],
                   color: MyAppColors.white000,
                 ),
-                child: _buildHistoryTitle()),
+                child: _buildListViewTitle(
+                    leftTitle: 'LỊCH SỬ GIAO DỊCH',
+                    rightTitle: 'XEM CHI TIẾT')),
             Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, index) {
@@ -133,11 +136,54 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildWeekTabView() {
-    return Container();
+    return Container(
+        color: Colors.transparent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            MyDatePicker(dateTime: dateTime),
+            Container(
+                color: Colors.transparent,
+                height: 300,
+                constraints: const BoxConstraints(maxHeight: 400),
+                child: const MyPieChart()),
+            Expanded(
+              child: ListView.separated(
+                  addAutomaticKeepAlives: true,
+                  itemBuilder: ((context, index) {
+                    if (index == 0) {
+                      return _buildListViewTitle(
+                          leftTitle: 'THÀNH PHẦN', rightTitle: "");
+                    }
+                    return ListTile(
+                      onTap: () {},
+                      title: const Text('Tiền ăn'),
+                      trailing: Text('- ${numberFormat.format(100000)} đ'),
+                    );
+                  }),
+                  separatorBuilder: (context, index) {
+                    // if (index == 0) return Container();
+                    return Divider(
+                      height: 1,
+                      color: MyAppColors.gray300,
+                    );
+                  },
+                  itemCount: 10),
+            )
+          ],
+        ));
   }
 
   Widget _buildDayTabView() {
-    return Container();
+    return Container(
+      child: Column(
+        children: [
+          _buildListViewTitle(
+              leftTitle: 'LỊCH SỬ GIAO DỊCH HÔM NAY', rightTitle: ""),
+          _buildHistoryExpense()
+        ],
+      ),
+    );
   }
 
   // Chart indicator
@@ -149,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
       animation: true,
       animationDuration: 1000,
       lineWidth: 15.0,
-      percent: 0.4,
+      percent: 0.7,
       center: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -200,16 +246,16 @@ class _HomeViewState extends State<HomeView> {
   }
 
   // History Expense
-  Widget _buildHistoryTitle() {
+  Widget _buildListViewTitle({String leftTitle = '', String rightTitle = ''}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('LỊCH SỬ GIAO DỊCH', style: TextStyle(fontSize: 14)),
+          Text(leftTitle, style: TextStyle(fontSize: 14)),
           TextButton(
               onPressed: () {},
-              child: Text('XEM CHI TIẾT',
+              child: Text(rightTitle,
                   style:
                       TextStyle(fontSize: 14, color: MyAppColors.accent800))),
         ],
@@ -221,6 +267,7 @@ class _HomeViewState extends State<HomeView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListTile(
+        onTap: () {},
         leading: MyAppIcons.bag,
         title: Text('Giao dịch'),
         subtitle: Text('Giao dịch'),
