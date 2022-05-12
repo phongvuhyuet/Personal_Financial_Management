@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:personal_financial_management/app/pages/home/home_view.dart';
 import 'package:personal_financial_management/app/pages/login_page.dart';
+import 'package:personal_financial_management/app/pages/statistic/statistic_view.dart';
 
-class HomeRoute extends StatelessWidget {
+class StatisticRoute extends StatelessWidget {
   final Map<String, Object>? arguments;
   final Function callback;
 
-  const HomeRoute({Key? key, this.arguments, required this.callback})
+  const StatisticRoute({Key? key, this.arguments, required this.callback})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class HomeRoute extends StatelessWidget {
                 return LoginPage();
               default:
                 callback(key: 'home', view: 'main', title: 'Home');
-                return HomeView();
+                return StatisticView();
             }
           },
         );
