@@ -132,6 +132,10 @@ class MyAppIcons {
   static Widget shareAndroid = defaultStyledIcon(SocialIcon.shareAndroid);
   static Widget shareIOS = defaultStyledIcon(SocialIcon.shareIOS);
 
+
+  // social icons
+  static Widget smartPhone = defaultStyledIcon(SocialIcon.smartPhone);
+
   //navigation icons
   static Widget apps = defaultStyledIcon(NavigationIcon.apps);
   static Widget arrowDropDown = defaultStyledIcon(NavigationIcon.arrowDropDown);
