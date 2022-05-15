@@ -11,11 +11,11 @@ void main() async {
 
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: "AIzaSyCIGVsY2hn2MICXSbcPUsKmVUPa4VfC4Ns",
-      appId: "1:515065352774:android:311546f23979fd77f97047",
-      messagingSenderId: "515065352774",
-      projectId: "personal-financel-app",
-    ),
+        apiKey: "AIzaSyCIGVsY2hn2MICXSbcPUsKmVUPa4VfC4Ns",
+        appId: "1:515065352774:android:311546f23979fd77f97047",
+        messagingSenderId: "515065352774",
+        projectId: "personal-financel-app",
+        authDomain: 'personal-financel-app.firebaseapp.com'),
   );
   Bloc.observer = BlocObserverExtend();
 

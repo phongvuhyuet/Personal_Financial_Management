@@ -22,12 +22,10 @@ class _MyAppState extends State<MyApp> {
   final AuthenticationRepository authenticationRepository =
       AuthenticationRepository();
   final UserRepository userRepository = UserRepository();
-  NavigatorState get _navigator => GlobalKeys.appNavigator.currentState!;
-  final GlobalKey<NavigatorState> navigatorKey1 = GlobalKey<NavigatorState>();
+  NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
-    print(navigatorKey1);
     return MultiRepositoryProvider(
         providers: [RepositoryProvider.value(value: authenticationRepository)],
         child: MultiBlocProvider(
@@ -38,7 +36,7 @@ class _MyAppState extends State<MyApp> {
                     userRepository: userRepository))
           ],
           child: MaterialApp(
-            key: GlobalKeys.appNavigator,
+            // key: _navigatorKey,
             //only show on recently opened app
             title: 'Personal Financial Management',
             debugShowMaterialGrid: false,
@@ -56,6 +54,7 @@ class _MyAppState extends State<MyApp> {
             ],
             onGenerateRoute: AppRoute.generateRoute,
             // home: MainPage(),
+            navigatorKey: GlobalKeys.appNavigatorKey,
             navigatorObservers: <NavigatorObserver>[routeObserver],
 
             builder: (context, child) {
@@ -65,26 +64,22 @@ class _MyAppState extends State<MyApp> {
 
                   switch (state.status) {
                     case AuthenticationStatus.unauthenticated:
-                      print("_navigator");
-                      print(_navigator.runtimeType);
-
-                      _navigator.pushNamedAndRemoveUntil(
-                        AppRoute.home,
-                        (Route<dynamic> route) => false,
-                      );
+                      // print("_navigator");
+                      // print(_navigator.runtimeType);
+                      // _navigator.pushNamedAndRemoveUntil(
+                      //   AppRoute.login,
+                      //   (Route<dynamic> route) => false,
+                      // );
                       break;
                     case AuthenticationStatus.authenticated:
-                      _navigator.pushNamedAndRemoveUntil(
-                        AppRoute.home,
-                        (Route<dynamic> route) => false,
-                        arguments: state.user,
-                      );
+                      // _navigator.pushNamedAndRemoveUntil(
+                      //   AppRoute.home,
+                      //   (Route<dynamic> route) => false,
+                      //   arguments: state.user,
+                      // );
                       break;
                     default:
-                      _navigator.pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => WelcomePage()),
-                          (route) => false);
+                      break;
                   }
                 },
                 child: child,

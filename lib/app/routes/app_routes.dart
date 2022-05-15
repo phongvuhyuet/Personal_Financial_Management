@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:personal_financial_management/app/pages/login_page.dart';
 import 'package:personal_financial_management/app/pages/main_page.dart';
 import 'package:personal_financial_management/app/pages/welcome_page.dart';
+import 'package:personal_financial_management/domain/blocs/auth_bloc/authentication_bloc.dart';
+import 'package:personal_financial_management/domain/repositories/repositories.dart';
+import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
 class PageViewTransition<T> extends MaterialPageRoute<T> {
   PageViewTransition({required WidgetBuilder builder, RouteSettings? settings})
@@ -35,7 +38,7 @@ class AppRoute {
       case home:
         return PageViewTransition(builder: (context) => MainPage());
       case login:
-        return PageViewTransition(builder: (context) => LoginPage());
+        return PageViewTransition(builder: (context) => WelcomePage());
       case detail:
       // return PageViewTransition(builder: (context) => DetailPage());
       case wallet:
@@ -43,7 +46,7 @@ class AppRoute {
       case dataEntry:
       // return PageViewTransition(builder: (context) => CreateIncomePage());
       default:
-        return PageViewTransition(builder: (context) => LoginPage());
+        return PageViewTransition(builder: (context) => WelcomePage());
     }
   }
 }

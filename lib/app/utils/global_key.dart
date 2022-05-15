@@ -8,7 +8,7 @@ class GlobalKeys {
       GlobalKey<ScaffoldState>();
 
   // Used for MaterialApp, coordinated by AppRoute
-  static final GlobalKey<NavigatorState> appNavigator =
+  static final  appNavigatorKey =
       GlobalKey<NavigatorState>();
 
   // Used for HomePage, coordinated by HomePage Navigator
