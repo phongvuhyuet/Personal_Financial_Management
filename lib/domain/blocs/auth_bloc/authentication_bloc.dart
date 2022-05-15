@@ -26,8 +26,7 @@ class AuthenticationBloc
 
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
-  late StreamSubscription
-      _authenticationStatusSubscription;
+  late StreamSubscription _authenticationStatusSubscription;
 
   @override
   Future<void> close() {
@@ -42,6 +41,8 @@ class AuthenticationBloc
   ) async {
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
+        print(event.status);
+
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
         final user = await _tryGetUser();

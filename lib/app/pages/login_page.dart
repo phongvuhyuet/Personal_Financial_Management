@@ -3,10 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/components/widgets/havenAccount.dart';
+import 'package:personal_financial_management/app/routes/app_routes.dart';
 import 'package:personal_financial_management/app/utils/assets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_financial_management/app/utils/global_key.dart';
 import 'package:personal_financial_management/domain/blocs/auth_bloc/authentication_bloc.dart';
 import 'package:personal_financial_management/domain/repositories/repositories.dart';
+import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
+
   late bool savePassword;
   late final TextEditingController _userNameController;
   late final TextEditingController _passwordController;
@@ -221,29 +226,36 @@ class _LoginPageState extends State<LoginPage> {
                   width: 280,
                   height: 45,
                   child: Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: MyAppColors.accent800,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: MyAppColors.accent800,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        'Đăng nhập',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromRGBO(34, 73, 87, 1),
-                            fontFamily: 'Lexend Deca',
-                            fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () {
-                        print('login');
-                        context.read<AuthenticationBloc>().add(
-                            AuthenticationStatusChanged(
-                                AuthenticationStatus.authenticated));
-                      },
                     ),
-                  ),
+                    child: const Text(
+                      'Đăng nhập',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(34, 73, 87, 1),
+                          fontFamily: 'Lexend Deca',
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      print('login');
+                      _navigator.pushNamedAndRemoveUntil(
+                          AppRoute.home, (route) => false);
+                      BlocProvider.of<AuthenticationBloc>(context)
+                          .add(const AuthenticationStatusChanged(
+                        AuthenticationStatus.authenticated,
+                      ));
+                      // context
+                      //     .read<AuthenticationBloc>()
+                      //     .add(const AuthenticationStatusChanged(
+                      //       AuthenticationStatus.authenticated,
+                      //     ));
+                    },
+                  )),
                 ),
                 // haven't account
                 const SizedBox(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:personal_financial_management/app/components/charts/chart_indicator/pie_chart.dart';
@@ -18,6 +19,8 @@ class _HomeViewState extends State<HomeView> {
   DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser);
+
     return _buildTabBar();
   }
 

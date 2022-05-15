@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:personal_financial_management/app/pages/login_page.dart';
+import 'package:personal_financial_management/app/routes/app_routes.dart';
+import 'package:personal_financial_management/app/utils/global_key.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -11,12 +13,18 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
+
   @override
   Widget build(BuildContext context) {
-    const providerConfigs = [EmailProviderConfiguration()];
+    const providerConfigs = [
+      EmailProviderConfiguration(),
+      GoogleProviderConfiguration(
+          clientId:
+              '515065352774-b6hmuepptkp59r8bchj2oa9ptghbfsa2.apps.googleusercontent.com')
+    ];
     return MaterialApp(
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/' : '/profile',
+      initialRoute: FirebaseAuth.instance.currentUser == null ? '/' : '/home',
       routes: {
         '/': (context) {
           return SignInScreen(
@@ -26,17 +34,23 @@ class _WelcomePageState extends State<WelcomePage> {
             },
             actions: [
               AuthStateChangeAction<SignedIn>((context, state) {
-                Navigator.pushReplacementNamed(context, '/profile');
+                _navigator.pushNamedAndRemoveUntil(
+                  AppRoute.home,
+                  (Route<dynamic> route) => false,
+                );
               }),
             ],
           );
         },
-        '/profile': (context) {
+        '/home': (context) {
           return ProfileScreen(
             providerConfigs: providerConfigs,
             actions: [
               SignedOutAction((context) {
-                Navigator.pushReplacementNamed(context, '/sign-in');
+                _navigator.pushNamedAndRemoveUntil(
+                  AppRoute.home,
+                  (Route<dynamic> route) => false,
+                );
               }),
             ],
           );
