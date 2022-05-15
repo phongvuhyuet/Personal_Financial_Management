@@ -1,45 +1,56 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Transaction extends Equatable {
-  String id;
-  Bool? isInput;
-  Double amount;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  String? id;
+  bool? is_output;
+  int amount;
+
+  var userRef;
+  var categoryRef;
+  Timestamp createdAt;
+
   Transaction({
-    required this.id,
-    this.isInput,
+    this.id,
+    this.is_output,
     required this.amount,
+    required this.userRef,
+    required this.categoryRef,
     required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
   });
-  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-        id: json["id"],
-        isInput: json["isInput"],
-        amount: json["amount"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        deletedAt: json["deleted_at"],
-      );
+  factory Transaction.fromSnapshot(DocumentSnapshot snapshot) {
+    final transaction =
+        Transaction.fromJson(snapshot.data() as Map<String, dynamic>);
+    transaction.id = snapshot.reference.id;
+    return transaction;
+  }
+  factory Transaction.fromJson(Map<String, dynamic> json) {
+    return Transaction(
+      id: json["documentID"],
+      is_output: json["is_output"],
+      amount: json["amount"],
+      userRef: json["userRef"],
+      categoryRef: json["categoryRef"],
+      createdAt: json["created_at"],
+    );
+  }
   Map<String, dynamic> toJson() => {
         "id": id,
-        "isInput": isInput,
+        "is_output": is_output,
         "amount": amount,
+        "userRef": userRef,
+        "categoryRef": categoryRef,
         "created_at": createdAt,
-        "updated_at": updatedAt,
-        "deleted_at": deletedAt,
       };
   @override
   List<Object?> get props => [
         id,
-        isInput,
+        is_output,
         amount,
+        userRef,
+        categoryRef,
         createdAt,
-        updatedAt,
-        deletedAt,
       ];
 }
