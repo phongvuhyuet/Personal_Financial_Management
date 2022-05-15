@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 class GlobalKeys {
   // Used for MainPage Scaffold
   static final GlobalKey<ScaffoldState> mainScaffold =
