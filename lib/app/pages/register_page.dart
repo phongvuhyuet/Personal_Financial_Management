@@ -73,21 +73,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         hoverColor: MyAppColors.gray300,
                         fillColor: MyAppColors.gray200,
                         labelText: "Số điện thoại hoặc email",
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 14,
                             color: MyAppColors.accent800,
                             fontWeight: FontWeight.bold,
@@ -111,21 +111,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         hoverColor: MyAppColors.gray300,
                         fillColor: MyAppColors.gray200,
                         labelText: "Mât khẩu",
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 14,
                             color: MyAppColors.accent800,
                             fontWeight: FontWeight.bold,
@@ -149,21 +149,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         hoverColor: MyAppColors.gray300,
                         fillColor: MyAppColors.gray200,
                         labelText: "Nhập lại mât khẩu",
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 14,
                             color: MyAppColors.accent800,
                             fontWeight: FontWeight.bold,
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             haventAccount(onPressed: () {}, children: []),
@@ -190,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: ElevatedButton.styleFrom(
                     primary: MyAppColors.accent800,
                     alignment: Alignment.center,
-                    fixedSize: Size(300, 50),
+                    fixedSize: const Size(300, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

@@ -92,21 +92,21 @@ class _LoginPageState extends State<LoginPage> {
                         hoverColor: MyAppColors.gray300,
                         fillColor: MyAppColors.gray200,
                         labelText: "Tài khoản",
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 14,
                             color: MyAppColors.accent800,
                             fontWeight: FontWeight.bold,
@@ -149,21 +149,21 @@ class _LoginPageState extends State<LoginPage> {
                         hoverColor: MyAppColors.gray300,
                         fillColor: MyAppColors.gray200,
                         labelText: "Mật khẩu",
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
+                              BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 14,
                             color: MyAppColors.accent800,
                             fontWeight: FontWeight.bold,
@@ -207,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       TextButton(
-                          onPressed: () {}, child: Text('Quên mật khẩu?'))
+                          onPressed: () {}, child: const Text('Quên mật khẩu?'))
                     ],
                   ),
                 ),
