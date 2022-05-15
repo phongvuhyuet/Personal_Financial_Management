@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:personal_financial_management/app/pages/login_page.dart';
+import 'package:personal_financial_management/app/pages/main_page.dart';
 import 'package:personal_financial_management/app/pages/welcome_page.dart';
 
 class PageViewTransition<T> extends MaterialPageRoute<T> {
@@ -26,21 +28,22 @@ class AppRoute {
   static const String statistic = '/statistic';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    print(settings);
     switch (settings.name) {
       case welcomePage:
         return PageViewTransition(builder: (context) => WelcomePage());
       case home:
-        // return PageViewTransition(builder: (context) => HomePage());
+        return PageViewTransition(builder: (context) => MainPage());
       case login:
-        // return PageViewTransition(builder: (context) => LoginPage());
+        return PageViewTransition(builder: (context) => LoginPage());
       case detail:
-        // return PageViewTransition(builder: (context) => DetailPage());
+      // return PageViewTransition(builder: (context) => DetailPage());
       case wallet:
-        // return PageViewTransition(builder: (context) => WalletPage());
+      // return PageViewTransition(builder: (context) => WalletPage());
       case dataEntry:
-        // return PageViewTransition(builder: (context) => CreateIncomePage());
+      // return PageViewTransition(builder: (context) => CreateIncomePage());
       default:
-        return PageViewTransition(builder: (context) => WelcomePage());
+        return PageViewTransition(builder: (context) => LoginPage());
     }
   }
 }

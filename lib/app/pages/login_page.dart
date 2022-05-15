@@ -4,6 +4,9 @@ import 'package:personal_financial_management/app/components/colors/my_colors.da
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/components/widgets/havenAccount.dart';
 import 'package:personal_financial_management/app/utils/assets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_financial_management/domain/blocs/auth_bloc/authentication_bloc.dart';
+import 'package:personal_financial_management/domain/repositories/repositories.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -233,7 +236,12 @@ class _LoginPageState extends State<LoginPage> {
                             fontFamily: 'Lexend Deca',
                             fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        print('login');
+                        context.read<AuthenticationBloc>().add(
+                            AuthenticationStatusChanged(
+                                AuthenticationStatus.authenticated));
+                      },
                     ),
                   ),
                 ),

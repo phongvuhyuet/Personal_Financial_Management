@@ -4,6 +4,7 @@ import 'package:personal_financial_management/app/components/charts/chart_indica
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/date_picker/date_controller.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
+import 'package:personal_financial_management/app/pages/detail/detail_view.dart';
 import 'package:personal_financial_management/app/utils/utils.dart';
 
 class HomeView extends StatefulWidget {
@@ -96,7 +97,7 @@ class _HomeViewState extends State<HomeView> {
         return false;
       },
       child: Container(
-        color: MyAppColors.white000,
+        color: Colors.transparent,
         child: Column(
           children: [
             MyDatePicker(dateTime: dateTime),
@@ -160,6 +161,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildDayTabView() {
     return Container(
+      color: Colors.white,
       child: Column(
         children: [
           _buildListViewTitle(
@@ -250,7 +252,15 @@ class _HomeViewState extends State<HomeView> {
           children: [
             Text(leftTitle, style: TextStyle(fontSize: 14)),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  // context.read<NavigationBloc>().add(NavigationEvent.toDetail);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DetailView(),
+                  //   ),
+                  // );
+                },
                 child: Text(rightTitle,
                     style:
                         TextStyle(fontSize: 14, color: MyAppColors.accent800))),

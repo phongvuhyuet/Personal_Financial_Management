@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
+import 'package:personal_financial_management/domain/blocs/auth_bloc/authentication_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -15,7 +17,13 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.account_box, text: 'Tài khoản', onTap: () {}),
           _createDrawerItem(icon: Icons.stars, text: 'Trợ giúp', onTap: () {}),
           _createDrawerItem(
-              icon: Icons.logout, text: 'Đăng xuất', onTap: () {}),
+              icon: Icons.logout,
+              text: 'Đăng xuất',
+              onTap: () {
+                context
+                    .read<AuthenticationBloc>()
+                    .add(AuthenticationLogoutRequested());
+              }),
           Divider(),
           _createDrawerItem(
               icon: Icons.bug_report, text: 'Báo cáo', onTap: () {}),

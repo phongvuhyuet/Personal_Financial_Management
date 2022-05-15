@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  String id;
-  String name;
-  String? email;
-  String password;
-  String phone;
-  String? address;
-  String? avatar;
-  String role;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  String status;
-  String token;
-  User({
+  final String id;
+  final String name;
+  final String? email;
+  final String password;
+  final String phone;
+  final String? address;
+  final String? avatar;
+  final String role;
+  final String createdAt;
+  final String updatedAt;
+  final String deletedAt;
+  final String status;
+  final String token;
+  const User({
     required this.id,
     required this.name,
     this.email,
@@ -29,6 +29,22 @@ class User extends Equatable {
     required this.status,
     required this.token,
   });
+  // empty constructor
+  static const empty = User(
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    avatar: '',
+    role: '',
+    createdAt: '',
+    updatedAt: '',
+    deletedAt: '',
+    status: '',
+    token: '',
+  );
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         name: json["name"],
