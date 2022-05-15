@@ -47,8 +47,8 @@ class _MyDatePickerState extends State<MyDatePicker> {
   Widget _buildDateShow() {
     return Expanded(
       child: InkWell(
-        splashColor: Colors.red,
-        hoverColor: Colors.red,
+        splashColor: MyAppColors.gray050,
+        hoverColor: MyAppColors.gray050,
         onTap: () async {
           final DateTime? picked =
               await showMyDatePicker(context: context, dateTime: dateTime);
