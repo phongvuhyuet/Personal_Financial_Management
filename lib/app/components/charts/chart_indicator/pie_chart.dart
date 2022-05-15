@@ -88,7 +88,7 @@ class MyPieChartState extends State {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: MyAppColors.gray800,
+            color: MyAppColors.gray700,
             value: 40,
             title: isTouched ? '40%' : '',
             radius: radius,
