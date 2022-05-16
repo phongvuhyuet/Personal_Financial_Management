@@ -8,6 +8,8 @@ import 'package:personal_financial_management/app/pages/welcome_page.dart';
 import 'package:personal_financial_management/app/routes/app_routes.dart';
 import 'package:personal_financial_management/app/utils/global_key.dart';
 import 'package:personal_financial_management/domain/blocs/auth_bloc/authentication_bloc.dart';
+import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
+import 'package:personal_financial_management/domain/repositories/budget_repo.dart';
 import 'package:personal_financial_management/domain/repositories/repositories.dart';
 import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
@@ -22,18 +24,28 @@ class _MyAppState extends State<MyApp> {
   final AuthenticationRepository authenticationRepository =
       AuthenticationRepository();
   final UserRepository userRepository = UserRepository();
+  final TransactionRepository transactionRepository = TransactionRepository();
+  final BudgetRepository budgetRepository = BudgetRepository();
   NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-        providers: [RepositoryProvider.value(value: authenticationRepository)],
+        providers: [
+          RepositoryProvider.value(value: authenticationRepository),
+          RepositoryProvider.value(value: transactionRepository),
+          RepositoryProvider.value(value: budgetRepository),
+        ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider<AuthenticationBloc>(
                 create: (context) => AuthenticationBloc(
                     authenticationRepository: authenticationRepository,
-                    userRepository: userRepository))
+                    userRepository: userRepository)),
+            BlocProvider<HomeBloc>(
+                create: (context) => HomeBloc(
+                    transactionRepository: transactionRepository,
+                    budgetRepository: budgetRepository))
           ],
           child: MaterialApp(
             // key: _navigatorKey,

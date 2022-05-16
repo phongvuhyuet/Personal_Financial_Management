@@ -9,33 +9,39 @@ class HomeState extends Equatable {
       this.transactions = const [],
       this.filter = TransactionFilter.month,
       this.timestamp = null,
-      this.budget = null});
+      this.totalBudget = 0,
+      this.spent = 0});
 
   final HomeStatus status;
-  final List<t.Transaction> transactions;
+  final List<t.Transaction>? transactions;
   final TransactionFilter filter;
   final Timestamp? timestamp;
-  final int? budget;
+  final num totalBudget;
+  final num spent;
 
   // List<t.Transaction> get filteredTransaction => {
   //   return transactions;
   // };
 
-  HomeState copyWith(
-      {HomeStatus Function()? status,
-      List<t.Transaction> Function()? transactions,
-      TransactionFilter Function()? filter,
-      Timestamp Function()? timestamp,
-      int Function()? budget}) {
+  HomeState copyWith({
+    HomeStatus Function()? status,
+    List<t.Transaction> Function()? transactions,
+    TransactionFilter Function()? filter,
+    Timestamp Function()? timestamp,
+    num Function()? totalBudget,
+    num Function()? spent,
+  }) {
     return HomeState(
       status: status != null ? status() : this.status,
       transactions: transactions != null ? transactions() : this.transactions,
       filter: filter != null ? filter() : this.filter,
       timestamp: timestamp != null ? timestamp() : this.timestamp,
-      budget: budget != null ? budget() : this.budget,
+      totalBudget: totalBudget != null ? totalBudget() : this.totalBudget,
+      spent: spent != null ? spent() : this.spent,
     );
   }
 
   @override
-  List<Object?> get props => [status, transactions, filter, timestamp, budget];
+  List<Object?> get props =>
+      [status, transactions, filter, timestamp, totalBudget, spent];
 }

@@ -34,6 +34,7 @@ admin.initializeApp({
 app.use(isAuth)
 app.use('/api/transaction', routes.transactionRouter)
 app.use('/api/category', routes.categoryRouter)
+app.use('/api/budget', routes.budgetRouter)
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)

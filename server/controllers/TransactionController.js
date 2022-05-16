@@ -53,6 +53,17 @@ const getFilteredTransaction = async (req, res) => {
               }
             ]
           }
+        }, {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category'
+          }
+        }, {
+          $project: {
+            'category.limits_per_month': 0
+          }
         }
       ])
     } else if (filter === 'date') {
@@ -85,9 +96,22 @@ const getFilteredTransaction = async (req, res) => {
               }
             ]
           }
+        },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category'
+          }
+        }, {
+          $project: {
+            'category.limits_per_month': 0
+          }
         }
       ])
     }
+    Transaction.populate(transactions, { path: 'category' })
     return res.status(200).json(transactions)
   } catch (error) {
     console.log(error)

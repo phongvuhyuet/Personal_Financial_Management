@@ -8,49 +8,35 @@ class Transaction extends Equatable {
   bool? is_output;
   int amount;
 
-  var userRef;
-  var categoryRef;
-  Timestamp createdAt;
+  String categoryName;
+  DateTime createdAt;
 
   Transaction({
     this.id,
     this.is_output,
     required this.amount,
-    required this.userRef,
-    required this.categoryRef,
+    required this.categoryName,
     required this.createdAt,
   });
-  factory Transaction.fromSnapshot(DocumentSnapshot snapshot) {
-    final transaction =
-        Transaction.fromJson(snapshot.data() as Map<String, dynamic>);
-    transaction.id = snapshot.reference.id;
-    return transaction;
-  }
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
-      id: json["documentID"],
-      is_output: json["is_output"],
-      amount: json["amount"],
-      userRef: json["userRef"],
-      categoryRef: json["categoryRef"],
-      createdAt: json["created_at"],
-    );
+        id: json["_id"],
+        is_output: json["is_output"],
+        amount: json["amount"],
+        categoryName: json["category"][0]["name"],
+        createdAt: DateTime.parse(json["created_at"]));
   }
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "is_output": is_output,
-        "amount": amount,
-        "userRef": userRef,
-        "categoryRef": categoryRef,
-        "created_at": createdAt,
-      };
+  // Map<String, dynamic> toJson() => {
+  //       "id": id,
+  //       "is_output": is_output,
+  //       "amount": amount,
+  //     };
   @override
   List<Object?> get props => [
         id,
         is_output,
         amount,
-        userRef,
-        categoryRef,
+        categoryName,
         createdAt,
       ];
 }
