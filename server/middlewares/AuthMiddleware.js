@@ -4,7 +4,7 @@ function isAuth(req, res, next) {
   if (req.headers.authtoken) {
     admin.auth().verifyIdToken(req.headers.authtoken)
       .then((token) => {
-        console.log(token)
+        req.body.user = token
         next()
       }).catch(() => {
         res.status(403).send('Unauthorized')

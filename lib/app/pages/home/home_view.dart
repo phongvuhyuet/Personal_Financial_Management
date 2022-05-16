@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -19,8 +20,15 @@ class _HomeViewState extends State<HomeView> {
   DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser);
-
+    //  FirebaseAuth.instance.currentUser?.getIdToken().then((token) {
+    //   print(token);
+    //   Dio()
+    //       .get('http://localhost:5000/hello',
+    //           options: Options(headers: {'AuthToken': token}))
+    //       .then((value) {
+    //     print(value);
+    //   });
+    // });
     return _buildTabBar();
   }
 

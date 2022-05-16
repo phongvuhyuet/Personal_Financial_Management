@@ -1,10 +1,10 @@
-import express from 'express'
+import express, { application } from 'express'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import admin from 'firebase-admin'
-// import routes from './routes/index.js'
+import routes from './routes/index.js'
 import isAuth from './middlewares/AuthMiddleware.js'
 import serviceAccount from './serviceAccountKey.json' assert {type: "json"}
 
@@ -31,11 +31,10 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://personal-financel-app-default-rtdb.firebaseio.com'
 })
-console.log(admin)
 app.use(isAuth)
-app.get((req, res) => {
-  req.send('helloworld')
-})
+app.use('/api/transaction', routes.transactionRouter)
+app.use('/api/category', routes.categoryRouter)
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
 })
