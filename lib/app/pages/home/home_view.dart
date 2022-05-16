@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:personal_financial_management/app/components/charts/chart_indicator/pie_chart.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
@@ -7,6 +9,7 @@ import 'package:personal_financial_management/app/components/date_picker/date_co
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/pages/detail/detail_view.dart';
 import 'package:personal_financial_management/app/utils/utils.dart';
+import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,8 +22,16 @@ class _HomeViewState extends State<HomeView> {
   DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser);
-
+    //  FirebaseAuth.instance.currentUser?.getIdToken().then((token) {
+    //   print(token);
+    //   Dio()
+    //       .get('http://localhost:5000/hello',
+    //           options: Options(headers: {'AuthToken': token}))
+    //       .then((value) {
+    //     print(value);
+    //   });
+    // });
+    BlocProvider.of<HomeBloc>(context).add(const HomeSubscriptionRequested());
     return _buildTabBar();
   }
 
