@@ -1,4 +1,5 @@
 import Transaction from '../models/Transaction.js'
+import getWeekDay from '../helpers/getWeekDay.js'
 
 const createTransaction = async (req, res) => {
   const {
@@ -23,7 +24,7 @@ const getFilteredTransaction = async (req, res) => {
   try {
     let transactions
     const reqTimestamp = new Date(timestamp)
-    if (filter === 'month') {
+    if (filter === 'TransactionFilter.month') {
       transactions = await Transaction.aggregate([
         {
           $match: {
@@ -66,7 +67,7 @@ const getFilteredTransaction = async (req, res) => {
           }
         }
       ])
-    } else if (filter === 'date') {
+    } else if (filter === 'TransactionFilter.date') {
       transactions = await Transaction.aggregate([
         {
           $addFields: {
@@ -110,8 +111,49 @@ const getFilteredTransaction = async (req, res) => {
           }
         }
       ])
+    } else {
+      // console.log(reqTimestamp)
+      // console.log(getWeekDay.getSunday(reqTimestamp))
+      // console.log(getWeekDay.getMonday(reqTimestamp))
+      transactions = await Transaction.aggregate([
+        {
+          $match: {
+            $and: [
+              {
+                $expr: {
+                  $lte: ['$created_at',
+                    getWeekDay.getSunday(reqTimestamp)
+                  ]
+                }
+              }, {
+                $expr: {
+                  $gte: [
+                    '$created_at', getWeekDay.getMonday(reqTimestamp)
+                  ]
+                }
+              }, {
+                $expr: {
+                  $eq: [
+                    '$user_id', req.body.user.uid
+                  ]
+                }
+              }
+            ]
+          }
+        }, {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category'
+          }
+        }, {
+          $project: {
+            'category.limits_per_month': 0
+          }
+        }
+      ])
     }
-    Transaction.populate(transactions, { path: 'category' })
     return res.status(200).json(transactions)
   } catch (error) {
     console.log(error)

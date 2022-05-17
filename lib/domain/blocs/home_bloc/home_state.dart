@@ -7,7 +7,7 @@ class HomeState extends Equatable {
   const HomeState(
       {this.status = HomeStatus.initial,
       this.transactions = const [],
-      this.filter = TransactionFilter.month,
+      this.filter = TransactionFilter.week,
       this.timestamp = null,
       this.totalBudget = 0,
       this.spent = 0});
