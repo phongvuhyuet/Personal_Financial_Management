@@ -18,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         super(const HomeState()) {
     on<HomeSubscriptionRequested>(_onSubscriptionRequested);
   }
+
   final TransactionRepository _transactionRepository;
   final BudgetRepository _budgetRepository;
   Future<void> _onSubscriptionRequested(

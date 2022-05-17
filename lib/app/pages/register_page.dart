@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
-import 'package:personal_financial_management/app/components/widgets/havenAccount.dart';
+import 'package:personal_financial_management/app/components/widgets/ChangeLoginMethod.dart';
 import 'package:personal_financial_management/app/utils/assets.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -74,16 +74,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         fillColor: MyAppColors.gray200,
                         labelText: "Số điện thoại hoặc email",
                         enabledBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
@@ -112,16 +110,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         fillColor: MyAppColors.gray200,
                         labelText: "Mât khẩu",
                         enabledBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
@@ -150,16 +146,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         fillColor: MyAppColors.gray200,
                         labelText: "Nhập lại mât khẩu",
                         enabledBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                             width: 1,
                             color: MyAppColors.gray300,
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(
                               width: 1, color: MyAppColors.accent800),
                         ),
@@ -178,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 20,
             ),
-            haventAccount(onPressed: () {}, children: []),
+            ChangeLoginMethod(onPressed: () {}, children: []),
             const SizedBox(
               height: 37,
             ),

@@ -32,7 +32,19 @@ class _HomeViewState extends State<HomeView> {
     //   });
     // });
     BlocProvider.of<HomeBloc>(context).add(const HomeSubscriptionRequested());
-    return _buildTabBar();
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state.status == HomeStatus.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state.status == HomeStatus.success) {
+          print("homestate${state.transactions}");
+        }
+        return Text(state.toString());
+      },
+    );
   }
 
   // Widgets

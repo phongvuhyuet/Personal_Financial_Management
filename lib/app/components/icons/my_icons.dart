@@ -26,7 +26,6 @@ class MyAppIcons {
         width: width,
         height: height,
         fit: fit,
-        color: color,
       );
 
   //Logo
@@ -131,7 +130,6 @@ class MyAppIcons {
   // share icons
   static Widget shareAndroid = defaultStyledIcon(SocialIcon.shareAndroid);
   static Widget shareIOS = defaultStyledIcon(SocialIcon.shareIOS);
-
 
   // social icons
   static Widget smartPhone = defaultStyledIcon(SocialIcon.smartPhone);

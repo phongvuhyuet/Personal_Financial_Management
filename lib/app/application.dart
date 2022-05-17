@@ -21,12 +21,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AuthenticationRepository authenticationRepository =
-      AuthenticationRepository();
-  final UserRepository userRepository = UserRepository();
-  final TransactionRepository transactionRepository = TransactionRepository();
-  final BudgetRepository budgetRepository = BudgetRepository();
+  late final AuthenticationRepository authenticationRepository;
+  late final UserRepository userRepository;
+  late final TransactionRepository transactionRepository;
+  late final BudgetRepository budgetRepository;
   NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authenticationRepository = AuthenticationRepository();
+    userRepository = UserRepository();
+    transactionRepository = TransactionRepository();
+    budgetRepository = BudgetRepository();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,7 @@ class _MyAppState extends State<MyApp> {
         child: MultiBlocProvider(
           providers: [
             BlocProvider<AuthenticationBloc>(
-                create: (context) => AuthenticationBloc(
+                create: (_) => AuthenticationBloc(
                     authenticationRepository: authenticationRepository,
                     userRepository: userRepository)),
             BlocProvider<HomeBloc>(
@@ -72,23 +80,19 @@ class _MyAppState extends State<MyApp> {
             builder: (context, child) {
               return BlocListener<AuthenticationBloc, AuthenticationState>(
                 listener: (context, state) {
-                  print(state);
-
                   switch (state.status) {
                     case AuthenticationStatus.unauthenticated:
-                      // print("_navigator");
-                      // print(_navigator.runtimeType);
-                      // _navigator.pushNamedAndRemoveUntil(
-                      //   AppRoute.login,
-                      //   (Route<dynamic> route) => false,
-                      // );
+                      _navigator.pushNamedAndRemoveUntil(
+                        AppRoute.login,
+                        (Route<dynamic> route) => false,
+                      );
                       break;
                     case AuthenticationStatus.authenticated:
-                      // _navigator.pushNamedAndRemoveUntil(
-                      //   AppRoute.home,
-                      //   (Route<dynamic> route) => false,
-                      //   arguments: state.user,
-                      // );
+                      _navigator.pushNamedAndRemoveUntil(
+                        AppRoute.home,
+                        (Route<dynamic> route) => false,
+                        arguments: state.user,
+                      );
                       break;
                     default:
                       break;

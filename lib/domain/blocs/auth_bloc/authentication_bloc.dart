@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logging/logging.dart';
 import 'package:personal_financial_management/domain/models/user.dart';
 import 'package:personal_financial_management/domain/repositories/repositories.dart';
 import 'package:personal_financial_management/domain/repositories/user_repo.dart';
@@ -39,10 +42,10 @@ class AuthenticationBloc
     AuthenticationStatusChanged event,
     Emitter<AuthenticationState> emit,
   ) async {
+    print("status:${event.status}");
+
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
-        print(event.status);
-
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
         final user = await _tryGetUser();
@@ -61,11 +64,13 @@ class AuthenticationBloc
     _authenticationRepository.logOut();
   }
 
-  Future<User?> _tryGetUser() async {
+  Future<MyUser?> _tryGetUser() async {
     try {
+      final googleSignInAcc = GoogleSignIn().currentUser;
+      print("acc ${googleSignInAcc}");
       final user = await _userRepository.getUser();
       return user;
-    } catch (_) {
+    } catch (error) {
       return null;
     }
   }

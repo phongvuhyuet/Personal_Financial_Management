@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:google_sign_in/google_sign_in.dart';
+
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
@@ -23,6 +25,16 @@ class AuthenticationRepository {
 
   void logOut() {
     _controller.add(AuthenticationStatus.unauthenticated);
+    Future<void> logOut() async {
+      try {
+        await Future.wait([
+          // _firebaseAuth.signOut(),
+          GoogleSignIn().signOut(),
+        ]);
+      } catch (_) {
+        // throw LogOutFailure();
+      }
+    }
   }
 
   void dispose() => _controller.close();

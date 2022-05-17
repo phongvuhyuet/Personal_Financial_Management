@@ -34,11 +34,11 @@ class AppRoute {
     print(settings);
     switch (settings.name) {
       case welcomePage:
-        return PageViewTransition(builder: (context) => WelcomePage());
+        return PageViewTransition(builder: (context) => LoginPage());
       case home:
         return PageViewTransition(builder: (context) => MainPage());
       case login:
-        return PageViewTransition(builder: (context) => WelcomePage());
+        return PageViewTransition(builder: (context) => LoginPage());
       case detail:
       // return PageViewTransition(builder: (context) => DetailPage());
       case wallet:
@@ -46,7 +46,7 @@ class AppRoute {
       case dataEntry:
       // return PageViewTransition(builder: (context) => CreateIncomePage());
       default:
-        return PageViewTransition(builder: (context) => WelcomePage());
+        return PageViewTransition(builder: (context) => LoginPage());
     }
   }
 }
