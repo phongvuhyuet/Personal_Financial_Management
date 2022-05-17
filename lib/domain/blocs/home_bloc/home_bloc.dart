@@ -26,8 +26,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(state.copyWith(status: () => HomeStatus.loading));
     try {
-      List<t.Transaction> transactions =
-          await _transactionRepository.getTransactions(DateTime.now());
+      List<t.Transaction> transactions = await _transactionRepository
+          .getTransactions(DateTime.now(), state.filter);
       Map<String, dynamic> budget =
           await _budgetRepository.getMonthlyBudget(DateTime.now());
       print(budget["totalBudget"]);
