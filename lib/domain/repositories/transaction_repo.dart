@@ -27,4 +27,14 @@ class TransactionRepository {
       throw error;
     }
   }
+
+  Future<List<t.Transaction>> getAllTransactions() async {
+    String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    Response<List> res = await Dio().get(
+      'http://192.168.20.106:5000/api/transaction/all',
+      options: Options(headers: {'AuthToken': token}),
+    );
+    List? arr = res.data;
+    return arr!.map((element) => t.Transaction.fromJson(element)).toList();
+  }
 }

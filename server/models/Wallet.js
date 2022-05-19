@@ -5,7 +5,7 @@ const { ObjectId } = Schema
 
 const WalletModel = new Schema(
   {
-    current_balance: {
+    amount: {
       type: Number,
       required: true,
     },
@@ -20,6 +20,9 @@ const WalletModel = new Schema(
     user_id: {
       type: String,
       required: true
+    },
+    description: {
+      type: String
     }
   },
   {

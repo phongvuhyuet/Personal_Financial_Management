@@ -160,10 +160,48 @@ const getFilteredTransaction = async (req, res) => {
     return res.status(500).json('server error')
   }
 }
+const getUserTransaction = async (req, res) => {
+  try {
+    const transactions = await Transaction.aggregate(
+      [
+        {
+          $match: {
+            $and: [
+              {
+                $expr: {
+                  $eq: [
+                    '$user_id', req.body.user.uid
+                  ]
+                }
+              }
+            ]
+          }
+        }, {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category'
+          }
+        }, {
+          $project: {
+            'category.limits_per_month': 0
+          }
+        }
+      ]
+    )
+
+    return res.status(200).json(transactions)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json('server error')
+  }
+}
 
 const TransactionController = {
   createTransaction,
-  getFilteredTransaction
+  getFilteredTransaction,
+  getUserTransaction
 }
 
 export default TransactionController
