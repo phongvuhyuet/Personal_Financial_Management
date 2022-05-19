@@ -20,6 +20,11 @@ const TransactionModel = new Schema(
     category: {
       type: ObjectId,
       ref: 'Category'
+    },
+    wallet: {
+      type: ObjectId,
+      required: true,
+      ref: 'Wallet'
     }
   },
   {
