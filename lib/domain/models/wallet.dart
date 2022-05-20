@@ -4,36 +4,36 @@ class Wallet extends Equatable {
   String id;
   String name;
   String type;
-  BigInt amount;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  String description;
+  num amount;
+  DateTime createdAt;
+  DateTime updatedAt;
   Wallet({
     required this.id,
     required this.name,
     required this.type,
     required this.amount,
+    required this.description,
     required this.createdAt,
     required this.updatedAt,
-    required this.deletedAt,
   });
   factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
-        id: json["id"],
+        id: json["_id"],
         name: json["name"],
         type: json["type"],
         amount: json["amount"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        deletedAt: json["deleted_at"],
+        description: json["description"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
       );
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "type": type,
         "amount": amount,
+        "description": description,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "deleted_at": deletedAt,
       };
   @override
   List<Object?> get props => [
@@ -41,8 +41,8 @@ class Wallet extends Equatable {
         name,
         type,
         amount,
+        description,
         createdAt,
         updatedAt,
-        deletedAt,
       ];
 }
