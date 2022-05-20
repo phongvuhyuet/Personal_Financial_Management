@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   late final UserRepository userRepository;
   late final TransactionRepository transactionRepository;
   late final BudgetRepository budgetRepository;
+  late final WalletRepository walletRepository;
   NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     userRepository = UserRepository();
     transactionRepository = TransactionRepository();
     budgetRepository = BudgetRepository();
+    walletRepository = WalletRepository();
   }
 
   @override
@@ -43,6 +45,7 @@ class _MyAppState extends State<MyApp> {
           RepositoryProvider.value(value: authenticationRepository),
           RepositoryProvider.value(value: transactionRepository),
           RepositoryProvider.value(value: budgetRepository),
+          RepositoryProvider.value(value: walletRepository),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -53,8 +56,8 @@ class _MyAppState extends State<MyApp> {
             BlocProvider<HomeBloc>(
                 create: (context) => HomeBloc(
                     transactionRepository: transactionRepository,
-                    budgetRepository: budgetRepository)
-                  ..add(const HomeSubscriptionRequested()))
+                    budgetRepository: budgetRepository,
+                    walletRepository: walletRepository))
           ],
           child: MaterialApp(
             // key: _navigatorKey,

@@ -18,54 +18,9 @@ class _WalletViewState extends State<WalletView> {
   NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
 
   late final Map<String, List<Wallet>> _walletTypes = {
-    "bank": <Wallet>[
-      Wallet(
-          id: "85",
-          name: "Ngân hàng Vietcombank",
-          type: "bank",
-          amount: BigInt.from(65146852),
-          createdAt: "",
-          updatedAt: "",
-          deletedAt: ""),
-      Wallet(
-          id: "85",
-          name: "Ngân hàng BIDV",
-          type: "bank",
-          amount: BigInt.from(654126852),
-          createdAt: "",
-          updatedAt: "",
-          deletedAt: "")
-    ],
-    "credit": <Wallet>[
-      Wallet(
-          id: "14",
-          name: "Master Card",
-          type: "credit",
-          amount: BigInt.from(341226248),
-          createdAt: "",
-          updatedAt: "",
-          deletedAt: "")
-    ],
-    "e_wallet": <Wallet>[
-      Wallet(
-          id: "75",
-          name: "Ví Momo",
-          type: "e_wallet",
-          amount: BigInt.from(121011964),
-          createdAt: "",
-          updatedAt: "",
-          deletedAt: "")
-    ],
-    "stock": <Wallet>[
-      Wallet(
-          id: "63",
-          name: "Ví chứng khoán",
-          type: "stock",
-          amount: BigInt.from(962155388),
-          createdAt: "",
-          updatedAt: "",
-          deletedAt: "")
-    ],
+    "bank": <Wallet>[],
+    "credit": <Wallet>[],
+    "stock": <Wallet>[],
   };
 
   @override

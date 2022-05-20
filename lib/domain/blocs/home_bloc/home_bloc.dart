@@ -13,14 +13,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required TransactionRepository transactionRepository,
     required BudgetRepository budgetRepository,
+    required WalletRepository walletRepository,
   })  : _transactionRepository = transactionRepository,
         _budgetRepository = budgetRepository,
+        _walletRepository = walletRepository,
         super(const HomeState()) {
     on<HomeSubscriptionRequested>(_onSubscriptionRequested);
   }
 
   final TransactionRepository _transactionRepository;
   final BudgetRepository _budgetRepository;
+  final WalletRepository _walletRepository;
 
   void _onSubscriptionRequested(
     HomeSubscriptionRequested event,
@@ -39,6 +42,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       todayTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       weekTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       monthTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      Map<String, dynamic> wallets = await _walletRepository.getAllWallets();
 
       Map<String, List<t.Transaction>>? transactionMap = {
         "day": todayTransactions,

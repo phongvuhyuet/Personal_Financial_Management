@@ -2,12 +2,11 @@ import Transaction from '../models/Transaction.js'
 import getWeekDay from '../helpers/getWeekDay.js'
 
 const createTransaction = async (req, res) => {
-  const { amount, is_output, user_id, category } = req.body
+  const {
+    amount, is_output, user_id, category, wallet
+  } = req.body
   let newTransaction = new Transaction({
-    amount,
-    is_output,
-    user_id,
-    category,
+    amount, is_output, user_id, category, wallet
   })
   try {
     newTransaction = await newTransaction.save()

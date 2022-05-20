@@ -13,6 +13,7 @@ import 'package:personal_financial_management/app/utils/utils.dart';
 import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
 import 'package:personal_financial_management/domain/blocs/page_route/page_route_bloc.dart';
 import 'package:personal_financial_management/domain/repositories/budget_repo.dart';
+import 'package:personal_financial_management/domain/repositories/repositories.dart';
 import 'package:personal_financial_management/domain/repositories/transaction_repo.dart';
 import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
@@ -29,6 +30,7 @@ class _HomeViewState extends State<HomeView> {
   late final UserRepository userRepository;
   late final TransactionRepository transactionRepository;
   late final BudgetRepository budgetRepository;
+  late final WalletRepository walletRepository;
 
   DateTime? dateTime;
   @override
@@ -37,6 +39,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     transactionRepository = TransactionRepository();
     budgetRepository = BudgetRepository();
+    walletRepository = WalletRepository();
   }
 
   @override
@@ -52,7 +55,8 @@ class _HomeViewState extends State<HomeView> {
             BlocProvider<HomeBloc>(
               create: (context) => HomeBloc(
                   transactionRepository: transactionRepository,
-                  budgetRepository: budgetRepository)
+                  budgetRepository: budgetRepository,
+                  walletRepository: walletRepository)
                 ..add(const HomeSubscriptionRequested()),
             )
           ],
