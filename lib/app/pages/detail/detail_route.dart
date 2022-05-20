@@ -24,9 +24,7 @@ class DetailRoute extends StatelessWidget {
                 return LoginPage();
               default:
                 callback(key: 'home', view: 'main', title: 'Home');
-                return DetailView(
-                  transactions: [],
-                );
+                return DetailView();
             }
           },
         );

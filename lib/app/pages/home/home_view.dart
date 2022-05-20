@@ -8,8 +8,13 @@ import 'package:personal_financial_management/app/components/colors/my_colors.da
 import 'package:personal_financial_management/app/components/date_picker/date_controller.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/pages/detail/detail_view.dart';
+import 'package:personal_financial_management/app/routes/app_routes.dart';
 import 'package:personal_financial_management/app/utils/utils.dart';
 import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
+import 'package:personal_financial_management/domain/blocs/page_route/page_route_bloc.dart';
+import 'package:personal_financial_management/domain/repositories/budget_repo.dart';
+import 'package:personal_financial_management/domain/repositories/transaction_repo.dart';
+import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,32 +24,49 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
+  PageController get _pageController => GlobalKeys.pageController;
+  late final UserRepository userRepository;
+  late final TransactionRepository transactionRepository;
+  late final BudgetRepository budgetRepository;
+
   DateTime? dateTime;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    transactionRepository = TransactionRepository();
+    budgetRepository = BudgetRepository();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //  FirebaseAuth.instance.currentUser?.getIdToken().then((token) {
-    //   print(token);
-    //   Dio()
-    //       .get('http://localhost:5000/hello',
-    //           options: Options(headers: {'AuthToken': token}))
-    //       .then((value) {
-    //     print(value);
-    //   });
-    // });
     BlocProvider.of<HomeBloc>(context).add(const HomeSubscriptionRequested());
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state.status == HomeStatus.loading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state.status == HomeStatus.success) {
-          print("homestate${state.transactions}");
-        }
-        return Text(state.toString());
-      },
-    );
+    return MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: transactionRepository),
+          RepositoryProvider.value(value: budgetRepository),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<HomeBloc>(
+              create: (context) => HomeBloc(
+                  transactionRepository: transactionRepository,
+                  budgetRepository: budgetRepository)
+                ..add(const HomeSubscriptionRequested()),
+            )
+          ],
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state.status == HomeStatus.loading) {
+                // return Center(
+                //   child: CircularProgressIndicator(),
+                // );
+              }
+              return _buildTabBar();
+            },
+          ),
+        ));
   }
 
   // Widgets
@@ -123,26 +145,23 @@ class _HomeViewState extends State<HomeView> {
         return false;
       },
       child: Container(
-        color: Colors.transparent,
+        color: Colors.white,
         child: Column(
           children: [
             MyDatePicker(dateTime: dateTime),
-            _buildIndicatorChart(),
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state.totalBudget.toDouble() > 0) {
+                  return _buildIndicatorChart(
+                      totalBudget: state.totalBudget.toDouble(),
+                      spent: state.spent.toDouble() * -1);
+                }
+                return _buildIndicatorChart(totalBudget: 0.0, spent: 0.0);
+              },
+            ),
             _buildListViewTitle(
                 leftTitle: 'LỊCH SỬ GIAO DỊCH', rightTitle: 'XEM CHI TIẾT'),
-            Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    height: 1,
-                  );
-                },
-                itemBuilder: (context, index) {
-                  return _buildHistoryExpense();
-                },
-                itemCount: 100,
-              ),
-            ),
+            _buildHistoryExpense(filter: 'month'),
           ],
         ),
       ),
@@ -155,32 +174,9 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            MyDatePicker(dateTime: dateTime),
-            Container(
-                color: Colors.transparent,
-                height: 300,
-                constraints: const BoxConstraints(maxHeight: 400),
-                child: const MyPieChart()),
-            _buildListViewTitle(leftTitle: 'THÀNH PHẦN', rightTitle: ""),
-            Expanded(
-              child: ListView.separated(
-                  addAutomaticKeepAlives: true,
-                  itemBuilder: ((context, index) {
-                    return ListTile(
-                      onTap: () {},
-                      title: const Text('Tiền ăn'),
-                      trailing: Text('- ${numberFormat.format(100000)} đ'),
-                    );
-                  }),
-                  separatorBuilder: (context, index) {
-                    // if (index == 0) return Container();
-                    return Divider(
-                      height: 1,
-                      color: MyAppColors.gray300,
-                    );
-                  },
-                  itemCount: 10),
-            )
+            _buildListViewTitle(
+                leftTitle: 'LỊCH SỬ GIAO DỊCH TUẦN NÀY', rightTitle: ""),
+            _buildHistoryExpense(filter: 'week')
           ],
         ));
   }
@@ -192,14 +188,15 @@ class _HomeViewState extends State<HomeView> {
         children: [
           _buildListViewTitle(
               leftTitle: 'LỊCH SỬ GIAO DỊCH HÔM NAY', rightTitle: ""),
-          _buildHistoryExpense()
+          _buildHistoryExpense(filter: 'day')
         ],
       ),
     );
   }
 
   // Chart indicator
-  Widget _buildIndicatorChart() {
+  Widget _buildIndicatorChart(
+      {required double totalBudget, required double spent}) {
     return CircularPercentIndicator(
       addAutomaticKeepAlive: true,
       reverse: true,
@@ -207,25 +204,34 @@ class _HomeViewState extends State<HomeView> {
       animation: true,
       animationDuration: 1000,
       lineWidth: 15.0,
-      percent: 0.7,
+      percent: (spent / totalBudget).abs() <= 1 ? (spent / totalBudget) : 1,
       center: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Tổng tiền',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: MyAppColors.gray600,
-            ),
-          ),
+          (spent.abs() > totalBudget)
+              ? const Text(
+                  'Đã chi tiêu vượt quá ngân sách',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 205, 5, 5),
+                  ),
+                )
+              : const Text(
+                  'Đã chi tiêu',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: MyAppColors.gray600,
+                  ),
+                ),
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
-              '${numberFormat.format(123459123)} ${numberFormat.currencyName}',
+              '${numberFormat.format(spent.abs())} ${numberFormat.currencyName}',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: MyAppColors.gray800,
@@ -238,7 +244,7 @@ class _HomeViewState extends State<HomeView> {
               maxWidth: 200,
             ),
             child: Text(
-              'Hạn mức: ${numberFormat.format(200000000)} ${numberFormat.currencyName}',
+              'Hạn mức: ${numberFormat.format(totalBudget)} ${numberFormat.currencyName}',
               maxLines: 1,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -261,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildListViewTitle({String leftTitle = '', String rightTitle = ''}) {
     return Container(
       margin: const EdgeInsets.only(top: 24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: MyAppColors.gray500,
@@ -277,38 +283,86 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(leftTitle, style: TextStyle(fontSize: 14)),
-            TextButton(
-                onPressed: () {
-                  // context.read<NavigationBloc>().add(NavigationEvent.toDetail);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailView(),
-                  //   ),
-                  // );
+            BlocProvider(
+              create: (context) => PageRouteBloc(),
+              child: BlocBuilder<PageRouteBloc, PageRouteState>(
+                builder: (context, state) {
+                  return TextButton(
+                      onPressed: () {
+                        _pageController.jumpToPage(1);
+                        BlocProvider.of<PageRouteBloc>(context).add(
+                          const PageJumpEvent(currentPageIndex: 1),
+                        );
+                      },
+                      child: Text(rightTitle,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: MyAppColors.accent800,
+                          )));
                 },
-                child: Text(rightTitle,
-                    style:
-                        TextStyle(fontSize: 14, color: MyAppColors.accent800))),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHistoryExpense() {
+  Widget _buildListTileExpense({
+    String title = '',
+    String subtitle = '',
+    String amount = '',
+    bool? isOutPut = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListTile(
         onTap: () {},
-        leading: MyAppIcons.bag,
-        title: Text('Giao dịch'),
-        subtitle: Text('Giao dịch'),
-        trailing: Text('- ${123456789} đ'),
+        leading: generateIcon(title),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: Text(
+          "${isOutPut == true ? '-' : '+'}${numberFormat.format(int.parse(amount))}",
+          style: TextStyle(
+            color: isOutPut == true ? Colors.red : Colors.green,
+          ),
+        ),
       ),
     );
   }
 
-  //Handler for widgets
-
+  Widget _buildHistoryExpense({String filter = ''}) {
+    return Expanded(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) =>
+            previous.transactions != current.transactions,
+        builder: (context, state) {
+          if (state.transactions!.isEmpty) {
+            return const Center(
+              child: Text('Không có giao dịch nào'),
+            );
+          }
+          return ListView.separated(
+            separatorBuilder: (context, index) {
+              return const Divider(
+                height: 1,
+                color: MyAppColors.gray600,
+              );
+            },
+            itemBuilder: (context, index) {
+              final element = state.transactionMap![filter]!.elementAt(index);
+              return _buildListTileExpense(
+                title: element.categoryName,
+                subtitle:
+                    "${element.createdAt.day}/${element.createdAt.month.toString().padLeft(2, '0')}/${element.createdAt.year}",
+                amount: element.amount.toString(),
+                isOutPut: element.is_output,
+              );
+            },
+            itemCount: state.transactionMap![filter]!.length,
+          );
+        },
+      ),
+    );
+  }
 }

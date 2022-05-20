@@ -100,7 +100,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(state.copyWith(status: loginStatus.loading));
     final isSignedIn = await _googleSignIn.isSignedIn();
-    print('signin $isSignedIn');
 
     if (isSignedIn) {
       try {
@@ -119,6 +118,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _onLogout(Logout event, Emitter emit) async {
     emit(state.copyWith(status: loginStatus.loading));
+    await FirebaseAuth.instance.signOut();
     await _googleSignIn.signOut();
     emit(state.copyWith(status: loginStatus.failure));
   }

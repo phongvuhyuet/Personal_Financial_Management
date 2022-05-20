@@ -5,7 +5,6 @@ class UserRepository {
   MyUser? user;
 
   Future<MyUser?> getUser() async {
-    print("${FirebaseAuth.instance.currentUser} la user");
     MyUser user = MyUser.empty;
     return user;
   }

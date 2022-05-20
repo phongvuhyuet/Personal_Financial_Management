@@ -63,7 +63,6 @@ class ChangeLoginMethod extends StatelessWidget {
               builder: (context, state) {
                 return InkWell(
                   onTap: () {
-                    print('Google');
                     BlocProvider.of<LoginBloc>(context).add(
                       const LoginWithGooglePressed(),
                     );
@@ -95,8 +94,6 @@ class ChangeLoginMethod extends StatelessWidget {
   Future<void> _handleSignIn() async {
     try {
       await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
+    } catch (error) {}
   }
 }

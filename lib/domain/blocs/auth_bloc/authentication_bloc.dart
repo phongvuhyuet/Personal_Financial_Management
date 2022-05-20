@@ -42,7 +42,6 @@ class AuthenticationBloc
     AuthenticationStatusChanged event,
     Emitter<AuthenticationState> emit,
   ) async {
-    print("status:${event.status}");
 
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
@@ -67,7 +66,6 @@ class AuthenticationBloc
   Future<MyUser?> _tryGetUser() async {
     try {
       final googleSignInAcc = GoogleSignIn().currentUser;
-      print("acc ${googleSignInAcc}");
       final user = await _userRepository.getUser();
       return user;
     } catch (error) {

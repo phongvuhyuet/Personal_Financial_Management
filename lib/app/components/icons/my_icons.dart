@@ -77,6 +77,8 @@ class MyAppIcons {
   static Widget wallet = defaultStyledIcon(FinancialIcon.wallet);
   static Widget walletActive = defaultStyledIcon(FinancialIcon.wallet);
   static Widget yen = defaultStyledIcon(FinancialIcon.yen);
+  static Widget vnd = defaultStyledIcon(FinancialIcon.vnd,
+      height: 10, width: 10, fit: BoxFit.contain);
 
   // general icons
   static Widget cart = defaultStyledIcon(GeneralIcon.cart);
@@ -184,4 +186,14 @@ class MyAppIcons {
   static Widget star = defaultStyledIcon(ToggleIcon.star);
   static Widget starOutline = defaultStyledIcon(ToggleIcon.starOutline);
   static Widget starHalf = defaultStyledIcon(ToggleIcon.starHalf);
+
+  //categories icons
+  static final Widget book = defaultStyledIcon(CategoriesIcon.book);
+  static final Widget clothes = defaultStyledIcon(CategoriesIcon.clothes);
+  static final Widget gift = defaultStyledIcon(CategoriesIcon.gift);
+  static final Widget key = defaultStyledIcon(CategoriesIcon.key);
+  static final Widget lunch = defaultStyledIcon(CategoriesIcon.lunch,
+      height: 24, width: 24, fit: BoxFit.contain);
+  static final Widget music = defaultStyledIcon(CategoriesIcon.music);
+  static final Widget toothBrush = defaultStyledIcon(CategoriesIcon.toothBrush);
 }

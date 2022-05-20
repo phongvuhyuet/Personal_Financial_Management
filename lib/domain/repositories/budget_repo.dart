@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:personal_financial_management/app/utils/constances.dart';
 import 'package:personal_financial_management/domain/models/transaction.dart'
     as t;
 
@@ -11,7 +12,7 @@ class BudgetRepository {
     try {
       String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
       Response<Map<String, dynamic>> res = await Dio().get(
-          'http://192.168.20.106:5000/api/budget',
+          '$IPAddress/api/budget',
           options: Options(headers: {'AuthToken': token}),
           queryParameters: {'timestamp': month.toString()});
       Map<String, dynamic>? result = res.data;
