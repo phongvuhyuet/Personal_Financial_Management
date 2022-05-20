@@ -7,6 +7,7 @@ import admin from 'firebase-admin'
 import routes from './routes/index.js'
 import isAuth from './middlewares/AuthMiddleware.js'
 import serviceAccount from './serviceAccountKey.json' assert {type: "json"}
+import def from './middlewares/DefaultMiddleware.js'
 
 const app = express()
 dotenv.config()
@@ -31,7 +32,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://personal-financel-app-default-rtdb.firebaseio.com'
 })
-app.use(isAuth)
+app.use(def)
 app.use('/api/transaction', routes.transactionRouter)
 app.use('/api/category', routes.categoryRouter)
 app.use('/api/budget', routes.budgetRouter)

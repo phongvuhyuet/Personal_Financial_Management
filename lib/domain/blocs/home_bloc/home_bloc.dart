@@ -13,13 +13,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required TransactionRepository transactionRepository,
     required BudgetRepository budgetRepository,
+    required WalletRepository walletRepository,
   })  : _transactionRepository = transactionRepository,
         _budgetRepository = budgetRepository,
+        _walletRepository = walletRepository,
         super(const HomeState()) {
     on<HomeSubscriptionRequested>(_onSubscriptionRequested);
   }
   final TransactionRepository _transactionRepository;
   final BudgetRepository _budgetRepository;
+  final WalletRepository _walletRepository;
   Future<void> _onSubscriptionRequested(
     HomeSubscriptionRequested event,
     Emitter<HomeState> emit,
@@ -31,6 +34,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await _transactionRepository.getAllTransactions();
     Map<String, dynamic> budget =
         await _budgetRepository.getMonthlyBudget(DateTime.now());
+    Map<String, dynamic> wallets = await _walletRepository.getAllWallets();
+    print(wallets);
     print(budget["totalBudget"]);
     print(budget["spent"]);
     print(transactions);

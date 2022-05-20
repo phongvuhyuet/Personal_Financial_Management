@@ -1,5 +1,6 @@
 import Category from '../models/Category.js'
 import Transaction from '../models/Transaction.js'
+import LimitsPerMonth from '../models/LimitsPerMonth.js'
 
 const getMonthlyBudget = async (req, res) => {
   const {
@@ -7,51 +8,82 @@ const getMonthlyBudget = async (req, res) => {
   } = req.query
   const reqTimestamp = new Date(timestamp)
   try {
-    const totalBudget = await Category.aggregate(
-      [
-        {
-          $unwind: {
-            path: '$limits_per_month'
-          }
-        }, {
-          $match: {
-            $and: [
-              {
-                $expr: {
-                  $eq: [
-                    {
-                      $month: '$limits_per_month.month'
-                    }, reqTimestamp.getUTCMonth() + 1
-                  ]
-                }
-              }, {
-                $expr: {
-                  $eq: [
-                    {
-                      $year: '$limits_per_month.month'
-                    }, reqTimestamp.getUTCFullYear()
-                  ]
-                }
-              }, {
-                $expr: {
-                  $eq: [
-                    '$limits_per_month.user_id', req.body.user.uid
-                  ]
-                }
-              }
-            ]
-          }
-        }, {
-          $group: {
-            _id: null,
-            totalBudget: {
-              $sum: '$limits_per_month.amount'
-            }
-          }
-        }
-      ]
+    // const totalBudget = await Category.aggregate(
+    //   [
+    //     {
+    //       $unwind: {
+    //         path: '$limits_per_month'
+    //       }
+    //     }, {
+    //       $match: {
+    //         $and: [
+    //           {
+    //             $expr: {
+    //               $eq: [
+    //                 {
+    //                   $month: '$limits_per_month.month'
+    //                 }, reqTimestamp.getUTCMonth() + 1
+    //               ]
+    //             }
+    //           }, {
+    //             $expr: {
+    //               $eq: [
+    //                 {
+    //                   $year: '$limits_per_month.month'
+    //                 }, reqTimestamp.getUTCFullYear()
+    //               ]
+    //             }
+    //           }, {
+    //             $expr: {
+    //               $eq: [
+    //                 '$limits_per_month.user_id', req.body.user.uid
+    //               ]
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     }, {
+    //       $group: {
+    //         _id: null,
+    //         totalBudget: {
+    //           $sum: '$limits_per_month.amount'
+    //         }
+    //       }
+    //     }
+    //   ]
 
-    )
+    // )
+    const totalBudget = await LimitsPerMonth.aggregate([
+      {
+        $match: {
+          $and: [
+            {
+              $expr: {
+                $eq: [
+                  {
+                    $month: '$month'
+                  }, reqTimestamp.getUTCMonth() + 1
+                ]
+              }
+            }, {
+              $expr: {
+                $eq: [
+                  {
+                    $year: '$month'
+                  }, reqTimestamp.getUTCFullYear()
+                ]
+              }
+            }, {
+              $expr: {
+                $eq: [
+                  '$user_id', req.body.user.uid
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]).limit(1)
     const spent = await Transaction.aggregate(
       [
         {
@@ -62,7 +94,7 @@ const getMonthlyBudget = async (req, res) => {
                   $eq: [
                     {
                       $month: '$created_at'
-                    }, reqTimestamp.getUTCMonth() + 1
+                    }, 5
                   ]
                 }
               }, {
@@ -70,13 +102,19 @@ const getMonthlyBudget = async (req, res) => {
                   $eq: [
                     {
                       $year: '$created_at'
-                    }, reqTimestamp.getUTCFullYear()
+                    }, 2022
                   ]
                 }
               }, {
                 $expr: {
                   $eq: [
-                    '$user_id', req.body.user.uid
+                    '$user_id', 's1PCfr3OdDU3qsnemaL1CngTAdw1'
+                  ]
+                }
+              }, {
+                $expr: {
+                  $eq: [
+                    '$is_output', true
                   ]
                 }
               }
@@ -86,32 +124,17 @@ const getMonthlyBudget = async (req, res) => {
           $group: {
             _id: null,
             spent: {
-              $sum: {
-                $cond: {
-                  if: {
-                    $eq: [
-                      '$is_output', true
-                    ]
-                  },
-                  then: {
-                    $subtract: [
-                      0, '$amount'
-                    ]
-                  },
-                  else: '$amount'
-                }
-              }
+              $sum: '$amount'
             }
           }
         }
       ]
     )
     return res.status(200).json({
-      totalBudget: totalBudget[0].totalBudget,
+      totalBudget: totalBudget[0].amount,
       spent: spent[0].spent
     })
   } catch (error) {
-    console.log(error)
     return res.status(500).json('server error')
   }
 }
