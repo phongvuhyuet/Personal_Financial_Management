@@ -30,4 +30,26 @@ class WalletRepository {
     });
     return result;
   }
+
+  Future<Wallet> createWallet(
+    num amount,
+    String name,
+    String type,
+    String description,
+  ) async {
+    String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    var data = {
+      "amount": amount,
+      "name": name,
+      "type": type,
+      "description": description
+    };
+    Response<Map<String, dynamic>> res = await Dio().post(
+        '$IPAddress/api/wallet',
+        options: Options(headers: {'AuthToken': token}),
+        data: jsonEncode(data));
+    Map<String, dynamic>? json = res.data;
+
+    return Wallet.fromJson(json!);
+  }
 }
