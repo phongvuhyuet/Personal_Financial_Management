@@ -1,5 +1,8 @@
+import mongoose from 'mongoose'
 import Transaction from '../models/Transaction.js'
 import getWeekDay from '../helpers/getWeekDay.js'
+
+const { ObjectId } = mongoose.Types
 
 const createTransaction = async (req, res) => {
   const {
@@ -197,11 +200,57 @@ const getUserTransaction = async (req, res) => {
     return res.status(500).json('server error')
   }
 }
+const getTransactionOfWallet = async (req, res) => {
+  try {
+    console.log(req.body.user.uid)
+    const transactions = await Transaction.aggregate(
+      [
+        {
+          $match: {
+            $and: [
+              {
+                $expr: {
+                  $eq: [
+                    '$user_id', req.body.user.uid
+                  ]
+                }
+              },
+              {
+                $expr: {
+                  $eq: [
+                    '$wallet', ObjectId(req.query.wallet_id)
+                  ]
+                }
+              }
+            ]
+          }
+        }, {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category'
+          }
+        }, {
+          $project: {
+            'category.limits_per_month': 0
+          }
+        }
+      ]
+    )
+
+    return res.status(200).json(transactions)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json('server error')
+  }
+}
 
 const TransactionController = {
   createTransaction,
   getFilteredTransaction,
-  getUserTransaction
+  getUserTransaction,
+  getTransactionOfWallet
 }
 
 export default TransactionController
