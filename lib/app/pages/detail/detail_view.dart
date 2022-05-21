@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:empty_widget/empty_widget.dart';
+import 'package:personal_financial_management/app/components/widgets/Empty.dart';
 import 'package:personal_financial_management/app/utils/extentsions.dart';
 import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
 
@@ -20,26 +21,7 @@ class _DetailViewState extends State<DetailView> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state.transactions!.isEmpty) {
-          return Container(
-            alignment: Alignment.center,
-            child: Container(
-              alignment: Alignment.center,
-              child: EmptyWidget(
-                image: null,
-                packageImage: PackageImage.Image_1,
-                title: 'Không có dữ liệu để hiện thị ròi!!!',
-                titleTextStyle: const TextStyle(
-                  fontSize: 22,
-                  color: Color(0xff9da9c7),
-                  fontWeight: FontWeight.w500,
-                ),
-                subtitleTextStyle: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xffabb8d6),
-                ),
-              ),
-            ),
-          );
+          return MyEmptyWidget();
         }
 
         return Material(

@@ -9,6 +9,7 @@ class AddWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         iconTheme: IconThemeData.fallback(),
@@ -68,6 +69,20 @@ class AddWallet extends StatelessWidget {
           ),
         ],
       )),
+    );
+  }
+
+  Widget _buildListItem() {
+    return Container(
+      decoration: const BoxDecoration(
+        border:
+            Border(bottom: BorderSide(width: 1.0, color: MyAppColors.gray400)),
+      ),
+      child: ListTile(
+        onTap: () {},
+        leading: MyAppIcons.bank,
+        title: Text('Tài khoản ngân hàng'),
+      ),
     );
   }
 }

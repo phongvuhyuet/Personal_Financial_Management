@@ -15,10 +15,11 @@ class HomeSubscriptionRequested extends HomeEvent {
 }
 
 class HomeSubscriptionRequestedWithFilter extends HomeEvent {
-  const HomeSubscriptionRequestedWithFilter({
+  HomeSubscriptionRequestedWithFilter({
     this.filter = TransactionFilter.day,
+    required this.date,
   });
 
   final TransactionFilter filter;
-  // final DateTime? date;
+  late DateTime? date;
 }

@@ -201,69 +201,73 @@ class _HomeViewState extends State<HomeView> {
   // Chart indicator
   Widget _buildIndicatorChart(
       {required double totalBudget, required double spent}) {
-    return CircularPercentIndicator(
-      addAutomaticKeepAlive: true,
-      reverse: true,
-      radius: 150.0,
-      animation: true,
-      animationDuration: 1000,
-      lineWidth: 15.0,
-      percent: (spent / totalBudget).abs() <= 1 ? (spent / totalBudget) : 1,
-      center: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          (spent.abs() > totalBudget)
-              ? const Text(
-                  'Đã chi tiêu vượt quá ngân sách',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 205, 5, 5),
+    return InkWell(
+      onTap: () {},
+      child: CircularPercentIndicator(
+        addAutomaticKeepAlive: true,
+        reverse: true,
+        radius: 150.0,
+        animation: true,
+        animationDuration: 1000,
+        lineWidth: 15.0,
+        percent:
+            (spent / totalBudget).abs() <= 1 ? (spent / totalBudget).abs() : 1,
+        center: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (spent.abs() > totalBudget)
+                ? const Text(
+                    'Đã chi tiêu vượt quá ngân sách',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 205, 5, 5),
+                    ),
+                  )
+                : const Text(
+                    'Đã chi tiêu',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: MyAppColors.gray600,
+                    ),
                   ),
-                )
-              : const Text(
-                  'Đã chi tiêu',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: MyAppColors.gray600,
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                '${numberFormat.format(spent.abs())} ${numberFormat.currencyName}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: MyAppColors.gray800,
+                  overflow: TextOverflow.clip,
                 ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              '${numberFormat.format(spent.abs())} ${numberFormat.currencyName}',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: MyAppColors.gray800,
-                overflow: TextOverflow.clip,
               ),
             ),
-          ),
-          Container(
-            constraints: const BoxConstraints(
-              maxWidth: 200,
-            ),
-            child: Text(
-              'Hạn mức: ${numberFormat.format(totalBudget)} ${numberFormat.currencyName}',
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: MyAppColors.gray600,
-                overflow: TextOverflow.ellipsis,
+            Container(
+              constraints: const BoxConstraints(
+                maxWidth: 200,
+              ),
+              child: Text(
+                'Hạn mức: ${numberFormat.format(totalBudget)} ${numberFormat.currencyName}',
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: MyAppColors.gray600,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        circularStrokeCap: CircularStrokeCap.butt,
+        backgroundColor: MyAppColors.gray100,
+        progressColor: MyAppColors.gray800,
       ),
-      circularStrokeCap: CircularStrokeCap.butt,
-      backgroundColor: MyAppColors.gray100,
-      progressColor: MyAppColors.gray800,
     );
   }
 

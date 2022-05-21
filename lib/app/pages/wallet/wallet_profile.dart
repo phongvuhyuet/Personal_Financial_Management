@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/components/images/my_images.dart';
+import 'package:personal_financial_management/app/components/widgets/ListViewTitle.dart';
+import 'package:personal_financial_management/app/utils/assets.dart';
+import 'package:personal_financial_management/app/utils/extentsions.dart';
 import 'package:personal_financial_management/domain/models/wallet.dart';
 
 class WalletProfile extends StatefulWidget {
@@ -16,7 +19,10 @@ class WalletProfile extends StatefulWidget {
 class _WalletProfileState extends State<WalletProfile> {
   @override
   Widget build(BuildContext context) {
+    print(widget.walletInfo);
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: MyAppColors.gray050,
         iconTheme: IconThemeData.fallback(),
@@ -32,30 +38,54 @@ class _WalletProfileState extends State<WalletProfile> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            // wallet info
             Row(
-              children: [Text('aaaaa')],
-            )
-            // _buildWalletInfo(),
-            // _buildWalletHistory(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildWalletInfo() {
-    return Container(
-      child: Expanded(
-        child: Row(
-          children: [
-            // FittedBox(fit: BoxFit.cover, child: MyAppImages.walletProfile)
-            // MyAppImages.walletProfile
-            // Image.asset(
-            //   'assets/images/wallet_profile.jpg',
-            //   height: 100,
-            //   width: 100,
-            // ),
-            // Text(widget.walletInfo.name),
+              children: [
+                Expanded(
+                  child: ListTile(
+                    leading: Image.asset(ProfileImage.walletProfile),
+                    title: Text(
+                      widget.walletInfo.name,
+                      style: const TextStyle(
+                        color: MyAppColors.gray700,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: InkWell(
+                        onTap: () {},
+                        child: Text(widget.walletInfo.description)),
+                    trailing: MyAppIcons.setting,
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Số dư',
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "${numberFormat.format(widget.walletInfo.amount).toString()}VNĐ",
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(
+                          color: MyAppColors.gray800,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            _buildWalletHistory(),
           ],
         ),
       ),
@@ -63,6 +93,15 @@ class _WalletProfileState extends State<WalletProfile> {
   }
 
   Widget _buildWalletHistory() {
-    return Container();
+    return Container(
+      child: Column(
+        children: [
+          BuildListViewTitle(
+            leftTitle: 'Tháng 5',
+            rightTitle: '',
+          )
+        ],
+      ),
+    );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_financial_management/app/components/colors/my_colors.dart';
 import 'package:personal_financial_management/app/components/icons/my_icons.dart';
 import 'package:personal_financial_management/app/pages/wallet/add_wallet.dart';
 import 'package:personal_financial_management/app/pages/wallet/wallet_profile.dart';
 import 'package:personal_financial_management/app/routes/app_routes.dart';
 import 'package:personal_financial_management/app/utils/utils.dart';
+import 'package:personal_financial_management/domain/blocs/home_bloc/home_bloc.dart';
 import 'package:personal_financial_management/domain/models/wallet.dart';
 
 class WalletView extends StatefulWidget {
@@ -17,57 +19,72 @@ class WalletView extends StatefulWidget {
 class _WalletViewState extends State<WalletView> {
   NavigatorState get _navigator => GlobalKeys.appNavigatorKey.currentState!;
 
-  late final Map<String, List<Wallet>> _walletTypes = {
-    "bank": <Wallet>[],
-    "credit": <Wallet>[],
-    "stock": <Wallet>[],
+  late Map<String, List<dynamic>> _walletTypes = {
+    "bank": <dynamic>[],
+    "credit": <dynamic>[],
+    "e_wallet": <dynamic>[],
+    "stock": <dynamic>[],
   };
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: MyAppColors.white000,
-        body: _buildWalletsView(wallets: _walletTypes));
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state.allWallets == null) {
+          return const Center(
+            child: Text("Không có ví nào"),
+          );
+        }
+        _walletTypes['bank'] = state.allWallets!['bank'];
+        _walletTypes['credit'] = state.allWallets!['credit'];
+        _walletTypes['stock'] = state.allWallets!['stock'];
+        _walletTypes['e_wallet'] = state.allWallets!['e_wallet'];
+        return Scaffold(
+            backgroundColor: MyAppColors.white000,
+            body: _buildWalletsView(wallets: _walletTypes));
+      },
+    );
   }
 
-  Widget _buildBankWalletView({required List<Wallet> banks}) {
+  Widget _buildBankWalletView({required List<dynamic> banks}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,
           child: Column(
-              children: banks
-                  .map((e) => Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0, color: MyAppColors.gray400)),
-                        ),
-                        child: ListTile(
-                          onTap: () => onWalletTap(wallet: e),
-                          leading: MyAppIcons.bank,
-                          title: Padding(
-                              padding: const EdgeInsets.only(left: 0),
-                              child: Text(
-                                e.name,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: MyAppColors.gray800,
-                                ),
-                              )),
-                          subtitle: Text(e.amount.toString()),
-                          trailing: Text(
-                              "${numberFormat.format(e.amount.toInt())} VND"),
-                        ),
-                      ))
-                  .toList()),
+            children: banks
+                .map((e) => Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                width: 1.0, color: MyAppColors.gray400)),
+                      ),
+                      child: ListTile(
+                        onTap: () => onWalletTap(wallet: e),
+                        leading: MyAppIcons.bank,
+                        title: Padding(
+                            padding: const EdgeInsets.only(left: 0),
+                            child: Text(
+                              e.name,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: MyAppColors.gray800,
+                              ),
+                            )),
+                        subtitle: Text(e.description.toString()),
+                        trailing: Text(
+                            "${numberFormat.format(e.amount.toInt())} VND"),
+                      ),
+                    ))
+                .toList(),
+          ),
         )
       ],
     );
   }
 
-  Widget _buildCreditWalletView({required List<Wallet> credits}) {
+  Widget _buildCreditWalletView({required List<dynamic> credits}) {
     return Row(children: [
       Expanded(
         flex: 1,
@@ -91,7 +108,7 @@ class _WalletViewState extends State<WalletView> {
                               color: MyAppColors.gray800,
                             ),
                           )),
-                      subtitle: Text(e.amount.toString()),
+                      subtitle: Text(e.description.toString()),
                       trailing:
                           Text("${numberFormat.format(e.amount.toInt())} VND"),
                     )))
@@ -100,7 +117,7 @@ class _WalletViewState extends State<WalletView> {
     ]);
   }
 
-  Widget _buildEWalletView({required List<Wallet> eWallets}) {
+  Widget _buildEWalletView({required List<dynamic> eWallets}) {
     return Row(children: [
       Expanded(
         flex: 1,
@@ -124,7 +141,7 @@ class _WalletViewState extends State<WalletView> {
                                 color: MyAppColors.gray800,
                               ),
                             )),
-                        subtitle: Text(e.amount.toString()),
+                        subtitle: Text(e.description.toString()),
                         trailing: Text(
                             "${numberFormat.format(e.amount.toInt())} VND"),
                       ),
@@ -134,7 +151,7 @@ class _WalletViewState extends State<WalletView> {
     ]);
   }
 
-  Widget _buildStockWalletView({required List<Wallet> stocks}) {
+  Widget _buildStockWalletView({required List<dynamic> stocks}) {
     return Row(children: [
       Expanded(
         flex: 1,
@@ -158,7 +175,7 @@ class _WalletViewState extends State<WalletView> {
                               color: MyAppColors.gray800,
                             ),
                           )),
-                      subtitle: Text(e.amount.toString()),
+                      subtitle: Text(e.description.toString()),
                       trailing:
                           Text("${numberFormat.format(e.amount.toInt())} VND"),
                     )))
@@ -167,7 +184,7 @@ class _WalletViewState extends State<WalletView> {
     ]);
   }
 
-  Widget _buildWalletsView({required Map<String, List<Wallet>> wallets}) {
+  Widget _buildWalletsView({required Map<String, List<dynamic>> wallets}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_financial_management/domain/models/transaction.dart'
     as t;
+import 'package:personal_financial_management/domain/models/wallet.dart';
 import 'package:personal_financial_management/domain/repositories/budget_repo.dart';
 import 'package:personal_financial_management/domain/repositories/repositories.dart';
 
@@ -42,14 +43,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       todayTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       weekTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       monthTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      Map<String, dynamic> wallets = await _walletRepository.getAllWallets();
+      Map<String, dynamic> allWallets = await _walletRepository.getAllWallets();
 
       Map<String, List<t.Transaction>>? transactionMap = {
         "day": todayTransactions,
         "week": weekTransactions,
         "month": monthTransactions,
       };
-      print(transactionMap);
       List<t.Transaction> allTransactions =
           await _transactionRepository.getAllTransactions();
       Map<String, dynamic> budget =
@@ -58,12 +58,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       allTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       transactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       emit(state.copyWith(
-          status: () => HomeStatus.success,
-          transactions: () => transactions,
-          totalBudget: () => budget["totalBudget"],
-          allTransactions: () => allTransactions,
-          transactionMap: transactionMap,
-          spent: () => budget["spent"]));
+        status: () => HomeStatus.success,
+        transactions: () => transactions,
+        totalBudget: () => budget["totalBudget"],
+        allTransactions: () => allTransactions,
+        allWallets: allWallets,
+        transactionMap: transactionMap,
+        spent: () => budget["spent"],
+      ));
     } catch (e) {
       print(e);
     }
