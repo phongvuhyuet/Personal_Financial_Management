@@ -9,4 +9,17 @@ abstract class HomeEvent extends Equatable {
 
 class HomeSubscriptionRequested extends HomeEvent {
   const HomeSubscriptionRequested();
+  // final TransactionFilter filter;
+  // final DateTime? date;
+
+}
+
+class HomeSubscriptionRequestedWithFilter extends HomeEvent {
+  HomeSubscriptionRequestedWithFilter({
+    this.filter = TransactionFilter.day,
+    required this.date,
+  });
+
+  final TransactionFilter filter;
+  late DateTime? date;
 }

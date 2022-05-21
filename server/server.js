@@ -20,17 +20,20 @@ app.use(express.urlencoded({ extended: true, limit: '30mb' }))
 app.use(cors())
 app.use(helmet())
 
-mongoose.connect(process.env.DATABASE_URI).then(() => {
-  console.log('Connect to database successfully!')
-}).catch((e) => {
-  console.log(e)
-})
+mongoose
+  .connect(process.env.DATABASE_URI)
+  .then(() => {
+    console.log('Connect to database successfully!')
+  })
+  .catch((e) => {
+    console.log(e)
+  })
 
 // firebase auth
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://personal-financel-app-default-rtdb.firebaseio.com'
+  databaseURL: 'https://personal-financel-app-default-rtdb.firebaseio.com',
 })
 app.use(def)
 app.use('/api/transaction', routes.transactionRouter)

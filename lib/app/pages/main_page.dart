@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:personal_financial_management/app/components/app_drawer/app_drawer.dart';
 
@@ -13,6 +14,7 @@ import 'package:personal_financial_management/app/pages/home/home_route.dart';
 import 'package:personal_financial_management/app/pages/statistic/statistic_route.dart';
 import 'package:personal_financial_management/app/pages/wallet/wallet_route.dart';
 import 'package:personal_financial_management/app/utils/global_key.dart';
+import 'package:personal_financial_management/domain/blocs/page_route/page_route_bloc.dart';
 import 'package:personal_financial_management/domain/models/models.dart';
 
 class MainPage extends StatefulWidget {
@@ -26,7 +28,9 @@ class _MainPageState extends State<MainPage>
     with AutomaticKeepAliveClientMixin<MainPage> {
   late List<MainView> _pages;
 
-  late PageController _pageController;
+  // late PageController _pageController;
+
+  PageController get _pageController => GlobalKeys.pageController;
   late List<String> _viewTracking;
   late MainView _currentMainView;
   late bool _isMainView;
@@ -79,8 +83,6 @@ class _MainPageState extends State<MainPage>
         icon: MyAppIcons.home,
       )
     ];
-    _pageController = PageController();
-
     _currentMainView = _pages[0];
     _isMainView = _currentMainView.view == 'main';
 
@@ -92,9 +94,9 @@ class _MainPageState extends State<MainPage>
     super.build(context);
     return SafeArea(
       child: Scaffold(
+        key: GlobalKeys.mainScaffold,
         appBar: _buildAppBar(),
         drawer: _buildAppDrawer(),
-        key: GlobalKeys.mainScaffold,
         body: _buildBody(),
         bottomNavigationBar: _buildBottomNavigator(),
       ),
@@ -107,7 +109,6 @@ class _MainPageState extends State<MainPage>
       controller: _pageController,
       allowImplicitScrolling: true,
       onPageChanged: _handlePageChanged,
-
       scrollDirection: Axis.horizontal,
       children: _pages.map((MainView mainView) {
         return mainView.widget;
@@ -125,9 +126,29 @@ class _MainPageState extends State<MainPage>
   }
 
   Widget _buildBottomNavigator() {
-    return MyBottomNavigator(
-        pageController: _pageController,
-        currentIndex: _pages.indexOf(_currentMainView));
+    return BlocProvider(
+      create: (context) => PageRouteBloc(),
+      child: BlocListener<PageRouteBloc, PageRouteState>(
+        // buildWhen: (previous, current) =>
+        //     previous.currentPageIndex != current.currentPageIndex,
+        listener: (context, state) {
+          // if (state.currentPageIndex != _pages.indexOf(_currentMainView)) {
+          //   _currentMainView = _pages[state.currentPageIndex];
+          //   _isMainView = _currentMainView.view == 'main';
+          // }
+          // return MyBottomNavigator(
+          //   pageController: _pageController,
+          //   // match _pageController current index with _pages index
+          //   currentIndex: _pages.indexOf(_currentMainView),
+          // );
+        },
+        child: MyBottomNavigator(
+          pageController: _pageController,
+          // match _pageController current index with _pages index
+          currentIndex: _pages.indexOf(_currentMainView),
+        ),
+      ),
+    );
   }
 
   Widget _buildLeading() {
@@ -166,7 +187,10 @@ class _MainPageState extends State<MainPage>
       centerTitle: false,
       backgroundColor: MyAppColors.gray050,
       titleSpacing: 0.0,
-      elevation: _currentMainView.key == 'homeKey' ? 0 : 5,
+      elevation: _currentMainView.key == 'homeKey' ||
+              _currentMainView.key == 'dataEntryKey'
+          ? 0
+          : 5,
       leading: _buildLeading(),
       actions: [
         IconButton(
@@ -186,7 +210,6 @@ class _MainPageState extends State<MainPage>
   Widget _buildAppDrawer() {
     return AppDrawer();
   }
-  
 
   // Widget handlers
   void _handlePageChanged(int index) {

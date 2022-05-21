@@ -7,14 +7,13 @@ import 'package:personal_financial_management/app/components/icons/my_icons.dart
 import 'package:personal_financial_management/app/utils/utils.dart';
 
 class MyDatePicker extends StatefulWidget {
-  const MyDatePicker({Key? key, required this.dateTime}) : super(key: key);
-  final DateTime? dateTime;
+  MyDatePicker({Key? key, required this.dateTime}) : super(key: key);
+  late DateTime? dateTime;
   @override
   _MyDatePickerState createState() => _MyDatePickerState();
 }
 
 class _MyDatePickerState extends State<MyDatePicker> {
-  DateTime? dateTime;
   late DateTime _today;
 
   @override
@@ -50,11 +49,11 @@ class _MyDatePickerState extends State<MyDatePicker> {
         splashColor: MyAppColors.gray050,
         hoverColor: MyAppColors.gray050,
         onTap: () async {
-          final DateTime? picked =
-              await showMyDatePicker(context: context, dateTime: dateTime);
+          final DateTime? picked = await showMyDatePicker(
+              context: context, dateTime: widget.dateTime);
           if (picked != null) {
             setState(() {
-              dateTime = picked;
+              widget.dateTime = picked;
             });
           }
         },
@@ -71,7 +70,7 @@ class _MyDatePickerState extends State<MyDatePicker> {
               alignment: Alignment.centerLeft,
               child: Text(
                 '${_today.month.toString().padLeft(2, '0')}/${_today.year}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: MyAppColors.gray900,
