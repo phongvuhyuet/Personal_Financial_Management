@@ -49,4 +49,26 @@ class TransactionRepository {
     List? arr = res.data;
     return arr!.map((element) => t.Transaction.fromJson(element)).toList();
   }
+
+  Future<t.Transaction> createWallet(
+    num amount,
+    bool is_output,
+    String category_id,
+    String wallet_id,
+  ) async {
+    String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    var data = {
+      "amount": amount,
+      "is_output": is_output,
+      "category": category_id,
+      "wallet": wallet_id
+    };
+    Response<Map<String, dynamic>> res = await Dio().post(
+        '$IPAddress/api/transaction',
+        options: Options(headers: {'AuthToken': token}),
+        data: jsonEncode(data));
+    Map<String, dynamic>? json = res.data;
+
+    return t.Transaction.fromJson(json!);
+  }
 }
