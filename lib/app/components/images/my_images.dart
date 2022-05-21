@@ -11,4 +11,8 @@ class MyAppImages {
     BackgroundImages.foregroundImagesURL,
     width: double.infinity,
   );
+  static Widget walletProfile = Image.asset(
+    ProfileImage.walletProfile,
+    width: double.infinity,
+  );
 }

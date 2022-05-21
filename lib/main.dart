@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:personal_financial_management/app/application.dart';
 import 'package:firebase_core/firebase_core.dart';
 

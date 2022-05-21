@@ -35,6 +35,7 @@ class ActionIcon {
   static const String setting = "$actionIconURL/setting.svg";
   static const String visibility = "$actionIconURL/visibility.svg";
   static const String visibilityOff = "$actionIconURL/visibility_off.svg";
+  // static const String setting = "$actionIconURL/setting.svg";
 }
 
 class Logo {
@@ -91,6 +92,7 @@ class FinancialIcon {
   static const String transaction = "$financialIconURL/transaction.svg";
   static const String wallet = "$financialIconURL/wallet.svg";
   static const String yen = "$financialIconURL/yen.svg";
+  static const String vnd = "$financialIconURL/vnd.svg";
 }
 
 class GeneralIcon {
@@ -170,4 +172,20 @@ class ToggleIcon {
 class BackgroundImages {
   static const String backgroundImagesURL = "${Assets.images}/background.svg";
   static const String foregroundImagesURL = "${Assets.images}/foreground.svg";
+}
+
+class CategoriesIcon {
+  static const String categoriesIconURL = "${Assets.icons}/categories_icons";
+
+  static const String book = "$categoriesIconURL/book.svg";
+  static const String clothes = "$categoriesIconURL/clothes.svg";
+  static const String gift = "$categoriesIconURL/gift.svg";
+  static const String key = "$categoriesIconURL/key.svg";
+  static const String lunch = "$categoriesIconURL/lunch.svg";
+  static const String music = "$categoriesIconURL/music.svg";
+  static const String toothBrush = "$categoriesIconURL/tooth_brush.svg";
+}
+
+class ProfileImage {
+  static const String walletProfile = "${Assets.images}/wallet_profile.jpg";
 }

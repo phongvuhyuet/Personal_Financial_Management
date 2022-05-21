@@ -21,9 +21,7 @@ const createTransaction = async (req, res) => {
 }
 
 const getFilteredTransaction = async (req, res) => {
-  const {
-    filter, timestamp
-  } = req.query
+  const { filter, timestamp } = req.query
   try {
     let transactions
     const reqTimestamp = new Date(timestamp)
@@ -36,39 +34,43 @@ const getFilteredTransaction = async (req, res) => {
                 $expr: {
                   $eq: [
                     {
-                      $month: '$created_at'
-                    }, reqTimestamp.getUTCMonth() + 1
-                  ]
-                }
-              }, {
+                      $month: '$created_at',
+                    },
+                    reqTimestamp.getUTCMonth() + 1,
+                  ],
+                },
+              },
+              {
                 $expr: {
                   $eq: [
                     {
-                      $year: '$created_at'
-                    }, reqTimestamp.getUTCFullYear()
-                  ]
-                }
-              }, {
+                      $year: '$created_at',
+                    },
+                    reqTimestamp.getUTCFullYear(),
+                  ],
+                },
+              },
+              {
                 $expr: {
-                  $eq: [
-                    '$user_id', req.body.user.uid
-                  ]
-                }
-              }
-            ]
-          }
-        }, {
+                  $eq: ['$user_id', req.body.user.uid],
+                },
+              },
+            ],
+          },
+        },
+        {
           $lookup: {
             from: 'categories',
             localField: 'category',
             foreignField: '_id',
-            as: 'category'
-          }
-        }, {
+            as: 'category',
+          },
+        },
+        {
           $project: {
-            'category.limits_per_month': 0
-          }
-        }
+            'category.limits_per_month': 0,
+          },
+        },
       ])
     } else if (filter === 'TransactionFilter.day') {
       transactions = await Transaction.aggregate([
@@ -77,42 +79,40 @@ const getFilteredTransaction = async (req, res) => {
             creationDate: {
               $dateToString: {
                 format: '%Y-%m-%d',
-                date: '$created_at'
-              }
-            }
-          }
-        }, {
+                date: '$created_at',
+              },
+            },
+          },
+        },
+        {
           $match: {
             $and: [
               {
                 $expr: {
-                  $eq: [
-                    '$creationDate', reqTimestamp.toISOString().split('T')[0]
-
-                  ]
-                }
-              }, {
+                  $eq: ['$creationDate', reqTimestamp.toISOString().split('T')[0]],
+                },
+              },
+              {
                 $expr: {
-                  $eq: [
-                    '$user_id', req.body.user.uid
-                  ]
-                }
-              }
-            ]
-          }
+                  $eq: ['$user_id', req.body.user.uid],
+                },
+              },
+            ],
+          },
         },
         {
           $lookup: {
             from: 'categories',
             localField: 'category',
             foreignField: '_id',
-            as: 'category'
-          }
-        }, {
+            as: 'category',
+          },
+        },
+        {
           $project: {
-            'category.limits_per_month': 0
-          }
-        }
+            'category.limits_per_month': 0,
+          },
+        },
       ])
     } else {
       // console.log(reqTimestamp)
@@ -124,37 +124,35 @@ const getFilteredTransaction = async (req, res) => {
             $and: [
               {
                 $expr: {
-                  $lte: ['$created_at',
-                    getWeekDay.getSunday(reqTimestamp)
-                  ]
-                }
-              }, {
+                  $lte: ['$created_at', getWeekDay.getSunday(reqTimestamp)],
+                },
+              },
+              {
                 $expr: {
-                  $gte: [
-                    '$created_at', getWeekDay.getMonday(reqTimestamp)
-                  ]
-                }
-              }, {
+                  $gte: ['$created_at', getWeekDay.getMonday(reqTimestamp)],
+                },
+              },
+              {
                 $expr: {
-                  $eq: [
-                    '$user_id', req.body.user.uid
-                  ]
-                }
-              }
-            ]
-          }
-        }, {
+                  $eq: ['$user_id', req.body.user.uid],
+                },
+              },
+            ],
+          },
+        },
+        {
           $lookup: {
             from: 'categories',
             localField: 'category',
             foreignField: '_id',
-            as: 'category'
-          }
-        }, {
+            as: 'category',
+          },
+        },
+        {
           $project: {
-            'category.limits_per_month': 0
-          }
-        }
+            'category.limits_per_month': 0,
+          },
+        },
       ])
     }
     return res.status(200).json(transactions)
@@ -165,34 +163,32 @@ const getFilteredTransaction = async (req, res) => {
 }
 const getUserTransaction = async (req, res) => {
   try {
-    const transactions = await Transaction.aggregate(
-      [
-        {
-          $match: {
-            $and: [
-              {
-                $expr: {
-                  $eq: [
-                    '$user_id', req.body.user.uid
-                  ]
-                }
-              }
-            ]
-          }
-        }, {
-          $lookup: {
-            from: 'categories',
-            localField: 'category',
-            foreignField: '_id',
-            as: 'category'
-          }
-        }, {
-          $project: {
-            'category.limits_per_month': 0
-          }
-        }
-      ]
-    )
+    const transactions = await Transaction.aggregate([
+      {
+        $match: {
+          $and: [
+            {
+              $expr: {
+                $eq: ['$user_id', req.body.user.uid],
+              },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $project: {
+          'category.limits_per_month': 0,
+        },
+      },
+    ])
 
     return res.status(200).json(transactions)
   } catch (error) {

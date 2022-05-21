@@ -26,33 +26,33 @@ Future<DateTime?> showMyDatePicker(
         },
       )),
       styleDatePicker: MaterialRoundedDatePickerStyle(
-        textStyleDayButton: TextStyle(
+        textStyleDayButton: const TextStyle(
           fontSize: 24,
           color: MyAppColors.gray900,
         ),
-        textStyleYearButton: TextStyle(
+        textStyleYearButton: const TextStyle(
           fontSize: 24,
           color: MyAppColors.gray900,
         ),
-        textStyleDayHeader: TextStyle(
+        textStyleDayHeader: const TextStyle(
           fontSize: 18,
           color: MyAppColors.gray900,
         ),
-        textStyleCurrentDayOnCalendar: TextStyle(
+        textStyleCurrentDayOnCalendar: const TextStyle(
             fontSize: 16,
             color: MyAppColors.gray900,
             fontWeight: FontWeight.bold),
-        textStyleDayOnCalendar: TextStyle(
+        textStyleDayOnCalendar: const TextStyle(
           fontSize: 14,
           color: MyAppColors.gray900,
         ),
-        textStyleDayOnCalendarSelected: TextStyle(
+        textStyleDayOnCalendarSelected: const TextStyle(
           fontSize: 16,
           color: MyAppColors.white000,
         ),
         textStyleDayOnCalendarDisabled: TextStyle(
             fontSize: 24, color: MyAppColors.gray900.withOpacity(0.1)),
-        textStyleMonthYearHeader: TextStyle(
+        textStyleMonthYearHeader: const TextStyle(
             decorationStyle: TextDecorationStyle.solid,
             fontSize: 20,
             color: MyAppColors.gray900,
@@ -66,15 +66,15 @@ Future<DateTime?> showMyDatePicker(
         sizeArrow: 30,
         colorArrowNext: MyAppColors.accent700,
         colorArrowPrevious: MyAppColors.accent700,
-        textStyleButtonPositive: TextStyle(
+        textStyleButtonPositive: const TextStyle(
           fontSize: 18,
           color: MyAppColors.accent800,
         ),
-        textStyleButtonNegative: TextStyle(
+        textStyleButtonNegative: const TextStyle(
           fontSize: 18,
           color: MyAppColors.accent800,
         ),
-        decorationDateSelected: BoxDecoration(
+        decorationDateSelected: const BoxDecoration(
           color: MyAppColors.accent800,
           shape: BoxShape.circle,
         ),
@@ -83,8 +83,9 @@ Future<DateTime?> showMyDatePicker(
         backgroundHeaderMonth: MyAppColors.white000,
       ),
       styleYearPicker: MaterialRoundedYearPickerStyle(
-        textStyleYear: TextStyle(fontSize: 40, color: MyAppColors.gray800),
-        textStyleYearSelected: TextStyle(
+        textStyleYear:
+            const TextStyle(fontSize: 40, color: MyAppColors.gray800),
+        textStyleYearSelected: const TextStyle(
             fontSize: 56,
             color: MyAppColors.gray800,
             fontWeight: FontWeight.bold),
