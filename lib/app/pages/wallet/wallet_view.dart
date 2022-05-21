@@ -24,6 +24,7 @@ class _WalletViewState extends State<WalletView> {
     "credit": <dynamic>[],
     "e_wallet": <dynamic>[],
     "stock": <dynamic>[],
+    "cash": <dynamic>[],
   };
 
   @override
@@ -39,6 +40,8 @@ class _WalletViewState extends State<WalletView> {
         _walletTypes['credit'] = state.allWallets!['credit'];
         _walletTypes['stock'] = state.allWallets!['stock'];
         _walletTypes['e_wallet'] = state.allWallets!['e_wallet'];
+        _walletTypes['cash'] = state.allWallets!['cash'];
+
         return Scaffold(
             backgroundColor: MyAppColors.white000,
             body: _buildWalletsView(wallets: _walletTypes));
@@ -184,6 +187,39 @@ class _WalletViewState extends State<WalletView> {
     ]);
   }
 
+  Widget _buildCashWalletView({required List<dynamic> cashs}) {
+    return Row(children: [
+      Expanded(
+        flex: 1,
+        child: Column(
+            children: cashs
+                .map((e) => Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              width: 1.0, color: MyAppColors.gray400)),
+                    ),
+                    child: ListTile(
+                      onTap: () => onWalletTap(wallet: e),
+                      leading: MyAppIcons.development,
+                      title: Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: Text(
+                            e.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: MyAppColors.gray800,
+                            ),
+                          )),
+                      subtitle: Text(e.description.toString()),
+                      trailing:
+                          Text("${numberFormat.format(e.amount.toInt())} VND"),
+                    )))
+                .toList()),
+      )
+    ]);
+  }
+
   Widget _buildWalletsView({required Map<String, List<dynamic>> wallets}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -271,6 +307,21 @@ class _WalletViewState extends State<WalletView> {
                     const SizedBox(
                       height: 32,
                     ),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        left: 10,
+                      ),
+                      child: Text(
+                        'Tiền mặt ',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    _buildCashWalletView(cashs: wallets['cash'] ?? []),
                   ],
                 ),
               ),
