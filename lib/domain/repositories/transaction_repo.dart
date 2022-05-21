@@ -27,6 +27,19 @@ class TransactionRepository {
     }
   }
 
+  Future<List<t.Transaction>> getWalletTransactions(String wallet_id) async {
+    try {
+      String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+      Response<List> res = await Dio().get('$IPAddress/api/transaction/wallet',
+          options: Options(headers: {'AuthToken': token}),
+          queryParameters: {'wallet_id': wallet_id});
+      List? arr = res.data;
+      return arr!.map((element) => t.Transaction.fromJson(element)).toList();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<List<t.Transaction>> getAllTransactions() async {
     String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
     Response<List> res = await Dio().get(
