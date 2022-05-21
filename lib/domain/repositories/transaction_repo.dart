@@ -50,7 +50,7 @@ class TransactionRepository {
     return arr!.map((element) => t.Transaction.fromJson(element)).toList();
   }
 
-  Future<t.Transaction> createWallet(
+  Future<t.Transaction> createTransaction(
     num amount,
     bool is_output,
     String category_id,
