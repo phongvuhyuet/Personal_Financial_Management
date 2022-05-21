@@ -17,4 +17,6 @@ class GlobalKeys {
   // Used for MaterialApp, coordinated by AppRoute
   static final GlobalKey<NavigatorState> bottomBarKey =
       GlobalKey<NavigatorState>();
+
+  static final PageController  pageController = PageController();
 }

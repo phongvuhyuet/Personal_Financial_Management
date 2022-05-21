@@ -26,7 +26,7 @@ class _ChartIndicatorState extends State<ChartIndicator> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Tổng tiền',
             style: TextStyle(
               fontSize: 16,
@@ -39,7 +39,7 @@ class _ChartIndicatorState extends State<ChartIndicator> {
             child: Text(
               '${numberFormat.format(123459123)} ${numberFormat.currencyName}',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: MyAppColors.gray800,
@@ -55,7 +55,7 @@ class _ChartIndicatorState extends State<ChartIndicator> {
               'Hạn mức: ${numberFormat.format(200000000)} ${numberFormat.currencyName}',
               maxLines: 1,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: MyAppColors.gray600,

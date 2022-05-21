@@ -18,11 +18,11 @@ class HomeRoute extends StatelessWidget {
           maintainState: false,
           builder: (BuildContext context) {
             switch (settings.name) {
-              case '/home/subscreen':
-                callback(key: 'home', view: 'subscreen', title: 'subscreen');
+              case '/homeKey/detail':
+                callback(key: 'homeSub', view: 'subscreen', title: 'subscreen');
                 return LoginPage();
               default:
-                callback(key: 'home', view: 'main', title: 'Home');
+                callback(key: 'homeKey', view: 'main', title: 'Home');
                 return HomeView();
             }
           },
