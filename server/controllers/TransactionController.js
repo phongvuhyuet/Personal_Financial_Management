@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Transaction from '../models/Transaction.js'
+import Category from '../models/Category.js'
 import Wallet from '../models/Wallet.js'
 import getWeekDay from '../helpers/getWeekDay.js'
 
@@ -9,12 +10,18 @@ const createTransaction = async (req, res) => {
   const {
     amount, is_output, category, wallet
   } = req.body
+  const categoryRecord = await Category.findOne({ name: category })
+  const walletRecord = await Wallet.findOne({ name: wallet })
   let newTransaction = new Transaction({
-    amount, is_output, user_id: req.body.user.uid, category, wallet
+    amount,
+    is_output,
+    user_id: req.body.user.uid,
+    category: categoryRecord._id,
+    wallet: walletRecord._id
   })
   try {
     newTransaction = await newTransaction.save()
-    await Wallet.findOneAndUpdate({ _id: wallet }, {
+    await Wallet.findOneAndUpdate({ name: wallet }, {
       $inc: {
         amount: is_output ? -amount : amount
       }
