@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -29,6 +30,39 @@ class BudgetRepository {
           '$IPAddress/api/budget/detail',
           options: Options(headers: {'AuthToken': token}),
           queryParameters: {'is_output': type});
+      Map<String, dynamic>? result = res.data;
+      return result!;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<String> createCategoryBudget(
+      DateTime timestamp, String category_id, num amount) async {
+    try {
+      String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+      Response<String> res = await Dio().post('$IPAddress/api/budget/category',
+          options: Options(headers: {'AuthToken': token}),
+          data: jsonEncode({
+            "month": timestamp.toString(),
+            "category_id": category_id,
+            "amount": amount
+          }));
+      String? result = res.data;
+      return result!;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<Map<String, dynamic>> createTotalBudget(
+      DateTime timestamp, num amount) async {
+    try {
+      String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+      Response<Map<String, dynamic>> res = await Dio().post(
+          '$IPAddress/api/budget',
+          options: Options(headers: {'AuthToken': token}),
+          data: jsonEncode({"month": timestamp.toString(), "amount": amount}));
       Map<String, dynamic>? result = res.data;
       return result!;
     } catch (error) {
