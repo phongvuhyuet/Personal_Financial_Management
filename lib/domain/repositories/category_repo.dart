@@ -24,15 +24,16 @@ class CategoryRepository {
     }
   }
 
-  Future<Category> createCategory(String name, bool isOutput) async {
+  Future<Map<String, dynamic>> createCategory(
+      String name, bool isOutput) async {
     try {
       String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
       Response<Map<String, dynamic>> res = await Dio().post(
           '$IPAddress/api/category',
           options: Options(headers: {'AuthToken': token}),
           data: jsonEncode({"name": name, "is_output": isOutput}));
-      Map<String, dynamic>? result = res.data;
-      return Category.fromJson(result!);
+      Map<String, dynamic> result = res.data!;
+      return result;
     } catch (error) {
       throw error;
     }
