@@ -20,58 +20,68 @@ import 'package:personal_financial_management/domain/repositories/budget_repo.da
 import 'package:personal_financial_management/domain/repositories/repositories.dart';
 import 'package:personal_financial_management/domain/repositories/user_repo.dart';
 
-// Widget returnTestable(Widget widget) {
-//   AuthenticationRepository authenticationRepository =
-//       new AuthenticationRepository();
-//   UserRepository userRepository = new UserRepository();
-//   TransactionRepository transactionRepository = new TransactionRepository();
-//   BudgetRepository budgetRepository = new BudgetRepository();
-//   WalletRepository walletRepository = new WalletRepository();
-//   return M
-// return MultiRepositoryProvider(
-//     providers: [
-//       RepositoryProvider.value(value: authenticationRepository),
-//       RepositoryProvider.value(value: transactionRepository),
-//       RepositoryProvider.value(value: budgetRepository),
-//       RepositoryProvider.value(value: walletRepository),
-//     ],
-//     child: MultiBlocProvider(
-//       providers: [
-//         BlocProvider<AuthenticationBloc>(
-//             create: (_) => AuthenticationBloc(
-//                 authenticationRepository: authenticationRepository,
-//                 userRepository: userRepository)),
-//         BlocProvider<HomeBloc>(
-//             create: (context) => HomeBloc(
-//                 transactionRepository: transactionRepository,
-//                 budgetRepository: budgetRepository,
-//                 walletRepository: walletRepository))
-//       ],
-//       child: MaterialApp(
-//         // key: _navigatorKey,
-//         //only show on recently opened app
-//         home: widget,
-//       ),
-//     ));
-// }
+Widget returnTestable(Widget widget) {
+  AuthenticationRepository authenticationRepository =
+      new AuthenticationRepository();
+  UserRepository userRepository = new UserRepository();
+  TransactionRepository transactionRepository = new TransactionRepository();
+  BudgetRepository budgetRepository = new BudgetRepository();
+  WalletRepository walletRepository = new WalletRepository();
+  return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: authenticationRepository),
+        RepositoryProvider.value(value: transactionRepository),
+        RepositoryProvider.value(value: budgetRepository),
+        RepositoryProvider.value(value: walletRepository),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+              create: (_) => AuthenticationBloc(
+                  authenticationRepository: authenticationRepository,
+                  userRepository: userRepository)),
+          BlocProvider<HomeBloc>(
+              create: (context) => HomeBloc(
+                  transactionRepository: transactionRepository,
+                  budgetRepository: budgetRepository,
+                  walletRepository: walletRepository))
+        ],
+        child: MaterialApp(
+          // key: _navigatorKey,
+          //only show on recently opened app
+          title: 'Personal Financial Management',
+          debugShowMaterialGrid: false,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+            GlobalCupertinoLocalizations
+                .delegate, // Add global cupertino localiztions.
+          ],
+          supportedLocales: const [
+            Locale("vi", "VI"),
+            Locale("en", "US"),
+          ],
+          onGenerateRoute: AppRoute.generateRoute,
+          // home: MainPage(),
+          navigatorKey: GlobalKeys.appNavigatorKey,
+          navigatorObservers: <NavigatorObserver>[routeObserver],
+
+          builder: (context, child) {
+            return widget;
+          },
+        ),
+      ));
+}
 
 void main() {
   testWidgets('Check full display', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MaterialApp(
-      home: LoginPage(),
-    ));
+    await tester.pumpWidget(returnTestable(LoginPage()));
 
     // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
+    expect(find.text('Đăng nhập'), findsWidgets);
     expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }
